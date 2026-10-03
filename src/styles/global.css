@@ -1,8 +1,57 @@
-/* ── Global styles ──────────────────────────────────────── */
+/* ── Lincoln Financial / CodeLinc Brand Tokens ──────────── */
+:root {
+  /* Primary palette — deep maroon from CodeLinc logo */
+  --color-primary:        #6B1237;
+  --color-primary-dark:   #4E0D28;
+  --color-primary-light:  #8C1A47;
+  --color-primary-faint:  #F7EEF2;
 
-*, *::before, *::after {
-  box-sizing: border-box;
+  /* Accent — warm orange-gold from icon ring */
+  --color-accent:         #E8843A;
+  --color-accent-dark:    #C96A20;
+  --color-accent-light:   #F5A96B;
+
+  /* Neutrals */
+  --color-bg:             #FAF8F9;
+  --color-surface:        #FFFFFF;
+  --color-border:         #E8DDE2;
+  --color-border-strong:  #C9B0BC;
+
+  /* Text */
+  --color-text:           #1A1A1A;
+  --color-text-secondary: #5C4A52;
+  --color-text-muted:     #9A8490;
+  --color-text-on-dark:   #FFFFFF;
+  --color-text-on-dark-2: #E8D0DA;
+
+  /* Status */
+  --color-success:        #1A6B3C;
+  --color-success-bg:     #D4EDDF;
+  --color-error:          #B91C1C;
+  --color-error-bg:       #FDECEA;
+  --color-warning:        #92400E;
+  --color-warning-bg:     #FEF3C7;
+  --color-info:           #1D4ED8;
+  --color-info-bg:        #DBEAFE;
+
+  /* Spacing & shape */
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-pill:  999px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 4px rgba(107,18,55,0.08);
+  --shadow-md:  0 4px 16px rgba(107,18,55,0.12);
+  --shadow-lg:  0 8px 32px rgba(107,18,55,0.18);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, sans-serif;
 }
+
+/* ── Reset & base ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   font-size: 16px;
@@ -11,20 +60,19 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-               'Helvetica Neue', Arial, sans-serif;
-  color: #111827;
-  background: #f4f7fb;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Skip-to-content link for keyboard users */
+/* Skip-to-content for keyboard users */
 .skip-link {
   position: absolute;
   top: -40px;
   left: 0;
-  background: #002b5c;
+  background: var(--color-primary);
   color: #fff;
   padding: 0.5rem 1rem;
   z-index: 9999;
@@ -34,20 +82,11 @@ body {
 }
 .skip-link:focus { top: 0; }
 
-a {
-  color: inherit;
-}
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; }
 
-img, svg {
-  display: block;
-  max-width: 100%;
-}
-
-button {
-  font-family: inherit;
-}
-
-/* Utility: visually hidden (screen-reader only) */
+/* Screen-reader only utility */
 .sr-only {
   position: absolute;
   width: 1px;

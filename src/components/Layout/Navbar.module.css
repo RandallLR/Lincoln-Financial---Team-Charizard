@@ -1,16 +1,16 @@
-/* ── Navbar ────────────────────────────────────────────── */
+/* ── Navbar ─────────────────────────────────────────────── */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  height: 64px;
-  background: #002b5c;   /* Lincoln Financial navy */
-  color: #fff;
+  height: 68px;
+  background: var(--color-primary);
+  color: var(--color-text-on-dark);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 12px rgba(107,18,55,0.35);
 }
 
 /* Brand */
@@ -19,28 +19,32 @@
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+  text-decoration: none;
 }
 .logoMark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: #e8a01c; /* Lincoln gold */
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #002b5c;
+  width: 40px;
+  height: 40px;
+  background: var(--color-surface);
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--color-primary);
   letter-spacing: 0.5px;
+  border: 2px solid var(--color-accent);
+  flex-shrink: 0;
 }
 .brandName {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
+  color: var(--color-text-on-dark);
 }
 .portalLabel {
-  font-size: 0.75rem;
-  color: #a8c4e0;
+  font-size: 0.72rem;
+  color: var(--color-text-on-dark-2);
   border-left: 1px solid rgba(255,255,255,0.25);
   padding-left: 0.75rem;
   line-height: 1;
@@ -50,32 +54,33 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 .navList {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 .link {
   display: inline-block;
-  padding: 0.4rem 0.85rem;
-  color: #cde0f5;
+  padding: 0.4rem 0.9rem;
+  color: var(--color-text-on-dark-2);
   text-decoration: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
   transition: background 0.15s, color 0.15s;
 }
 .link:hover {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
+  background: rgba(255,255,255,0.12);
+  color: var(--color-text-on-dark);
 }
 .active {
-  background: rgba(255,255,255,0.15);
-  color: #fff;
+  background: rgba(255,255,255,0.18);
+  color: var(--color-text-on-dark);
   font-weight: 600;
+  border-bottom: 2px solid var(--color-accent);
 }
 
 /* User area */
@@ -85,21 +90,22 @@
   gap: 0.75rem;
 }
 .userName {
-  font-size: 0.85rem;
-  color: #a8c4e0;
+  font-size: 0.83rem;
+  color: var(--color-text-on-dark-2);
 }
 .logoutBtn {
   padding: 0.35rem 0.9rem;
   background: transparent;
   border: 1px solid rgba(255,255,255,0.35);
-  color: #fff;
-  border-radius: 4px;
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.15s;
+  font-size: 0.83rem;
+  transition: background 0.15s, border-color 0.15s;
 }
 .logoutBtn:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.6);
 }
 
 /* Hamburger — hidden on desktop */
@@ -116,7 +122,7 @@
   display: block;
   width: 22px;
   height: 2px;
-  background: #fff;
+  background: var(--color-text-on-dark);
   border-radius: 2px;
 }
 
@@ -126,15 +132,15 @@
   .nav {
     display: none;
     position: absolute;
-    top: 64px;
+    top: 68px;
     left: 0;
     right: 0;
     flex-direction: column;
     align-items: flex-start;
-    background: #002b5c;
+    background: var(--color-primary-dark);
     padding: 1rem 2rem;
     gap: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 16px rgba(107,18,55,0.4);
   }
   .navOpen { display: flex; }
   .navList { flex-direction: column; width: 100%; }

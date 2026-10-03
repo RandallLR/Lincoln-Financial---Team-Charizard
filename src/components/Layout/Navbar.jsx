@@ -26,10 +26,12 @@ export default function Navbar() {
   return (
     <header className={styles.header} role="banner">
       <div className={styles.brand}>
-        {/* Lincoln Financial logo placeholder */}
+        {/* Circular badge — mirrors the CodeLinc logo mark */}
         <span className={styles.logoMark} aria-hidden="true">LF</span>
-        <span className={styles.brandName}>Lincoln Financial</span>
-        <span className={styles.portalLabel}>Employee Portal</span>
+        <div>
+          <span className={styles.brandName}>Lincoln Financial</span>
+          <span className={styles.portalLabel}>Employee Portal</span>
+        </div>
       </div>
 
       {/* Hamburger for mobile */}

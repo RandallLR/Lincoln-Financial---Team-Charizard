@@ -1,14 +1,14 @@
-/* ── Shell ─────────────────────────────────────────────── */
+/* ── Shell ──────────────────────────────────────────────── */
 .shell {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: var(--color-bg);
 }
 .main {
   flex: 1;
-  background: #f4f7fb;
   padding: 2rem;
-  outline: none; /* skip-to-content target — suppress browser outline */
+  outline: none;
 }
 
 @media (max-width: 768px) {

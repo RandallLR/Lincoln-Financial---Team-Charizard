@@ -1,27 +1,43 @@
 /* ── Dashboard ──────────────────────────────────────────── */
 .page { max-width: 1100px; margin: 0 auto; }
 
-/* Welcome */
+/* Welcome banner */
 .welcome {
-  background: linear-gradient(100deg, #002b5c 0%, #004590 100%);
-  color: #fff;
-  border-radius: 10px;
-  padding: 1.75rem 2rem;
+  background: linear-gradient(110deg, var(--color-primary-dark) 0%, var(--color-primary) 60%, var(--color-primary-light) 100%);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-lg);
+  padding: 1.85rem 2rem;
   margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
 }
-.heading { margin: 0 0 0.35rem; font-size: 1.6rem; }
-.subheading { margin: 0; color: #a8c4e0; font-size: 0.9rem; }
+/* Decorative circle — echoes the CodeLinc circular logo motif */
+.welcome::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border: 20px solid rgba(232,132,58,0.18);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.heading    { margin: 0 0 0.4rem; font-size: 1.65rem; font-weight: 700; }
+.subheading { margin: 0; color: var(--color-text-on-dark-2); font-size: 0.9rem; }
 
 /* Sections */
-.section { margin-bottom: 2.25rem; }
-.sectionTitle {
-  font-size: 1.1rem;
+.section       { margin-bottom: 2.25rem; }
+.sectionTitle  {
+  font-size: 1rem;
   font-weight: 700;
-  color: #002b5c;
+  color: var(--color-primary);
   margin: 0 0 1rem;
   padding-bottom: 0.4rem;
-  border-bottom: 2px solid #e8a01c;
+  border-bottom: 2px solid var(--color-accent);
   display: inline-block;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
 }
 
 /* Quick-access tiles */
@@ -32,36 +48,37 @@
 }
 .tile {
   display: block;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.5rem;
   text-decoration: none;
   color: inherit;
-  transition: box-shadow 0.15s, transform 0.1s;
+  transition: box-shadow 0.15s, transform 0.12s, border-color 0.15s;
 }
 .tile:hover {
-  box-shadow: 0 4px 16px rgba(0,43,92,0.12);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--color-accent);
 }
-.tileIcon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+.tileIcon  { font-size: 2rem; display: block; margin-bottom: 0.6rem; }
 .tileTitle {
   margin: 0 0 0.4rem;
   font-size: 1rem;
   font-weight: 700;
-  color: #002b5c;
+  color: var(--color-primary);
 }
-.tileDesc { margin: 0; font-size: 0.85rem; color: #4b5563; line-height: 1.5; }
+.tileDesc  { margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.55; }
 
 /* Announcements */
 .announcements { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
 .announcement {
-  background: #fff;
-  border-left: 4px solid #e8a01c;
-  border-radius: 0 6px 6px 0;
-  padding: 1rem 1.25rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1rem 1.35rem;
+  box-shadow: var(--shadow-sm);
 }
-.annoDate { font-size: 0.78rem; color: #6b7a8d; display: block; margin-bottom: 0.25rem; }
-.annoTitle { margin: 0 0 0.35rem; font-size: 0.95rem; color: #002b5c; font-weight: 700; }
-.annoBody  { margin: 0; font-size: 0.875rem; color: #374151; line-height: 1.55; }
+.annoDate  { font-size: 0.76rem; color: var(--color-text-muted); display: block; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.4px; }
+.annoTitle { margin: 0 0 0.35rem; font-size: 0.95rem; color: var(--color-primary); font-weight: 700; }
+.annoBody  { margin: 0; font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.55; }

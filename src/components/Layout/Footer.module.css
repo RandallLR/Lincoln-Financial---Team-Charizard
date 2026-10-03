@@ -1,7 +1,7 @@
-/* ── Footer ────────────────────────────────────────────── */
+/* ── Footer ─────────────────────────────────────────────── */
 .footer {
-  background: #001e42;
-  color: #8aaecf;
+  background: var(--color-primary-dark);
+  color: var(--color-text-on-dark-2);
   padding: 1.5rem 2rem;
   margin-top: auto;
 }
@@ -11,13 +11,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   text-align: center;
 }
 .copy {
   margin: 0;
   font-size: 0.85rem;
-  color: #cde0f5;
+  color: var(--color-text-on-dark);
+  font-weight: 500;
 }
 .links {
   display: flex;
@@ -26,17 +27,17 @@
   justify-content: center;
 }
 .link {
-  color: #8aaecf;
+  color: var(--color-text-on-dark-2);
   text-decoration: none;
   font-size: 0.8rem;
   transition: color 0.15s;
 }
 .link:hover {
-  color: #fff;
+  color: var(--color-accent-light);
   text-decoration: underline;
 }
 .disclaimer {
   margin: 0;
-  font-size: 0.75rem;
-  color: #556e87;
+  font-size: 0.73rem;
+  color: rgba(255,255,255,0.35);
 }
