@@ -169,3 +169,353 @@
 @media (max-width: 600px) {
   .formRow { grid-template-columns: 1fr; }
 }
+
+
+/* ════════════════════════════════════════════════════════
+   CARE PLAN PANEL
+   ════════════════════════════════════════════════════════ */
+
+/* ── Empty / load state ─────────────────────────────────── */
+.cpEmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  gap: 1rem;
+}
+.cpEmptyIcon {
+  font-size: 3rem;
+  line-height: 1;
+}
+.cpEmptyTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.cpEmptyDesc {
+  margin: 0;
+  max-width: 480px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+/* ── Header strip ───────────────────────────────────────── */
+.cpHeader {
+  margin-bottom: 0.5rem;
+}
+.cpMainTitle {
+  margin: 0 0 0.3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.cpSubtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Legend ─────────────────────────────────────────────── */
+.cpLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 1rem 0 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.cpLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+.cpLegendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cpLegendDotUrgent   { background: var(--color-error); }
+.cpLegendDotDeferred { background: var(--color-accent); }
+.cpLegendDotRoutine  { background: var(--color-success); }
+
+/* ── Main grid layout ───────────────────────────────────── */
+.cpGrid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ── Plan year columns ──────────────────────────────────── */
+.cpColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.cpColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Year heading row */
+.cpYearHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.cpYearBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cpYearTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ── Procedure cards ────────────────────────────────────── */
+.cpProcedures {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cpCard {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  transition: box-shadow 0.15s;
+}
+.cpCard:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Urgency variants — left accent border */
+.cpUrgent   { border-left: 4px solid var(--color-error); }
+.cpDeferred { border-left: 4px solid var(--color-accent); }
+.cpRoutine  { border-left: 4px solid var(--color-success); }
+
+.cpCardTop {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-bottom: 0.55rem;
+}
+.cpCardMonth {
+  flex-shrink: 0;
+  width: 34px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-top: 2px;
+}
+.cpCardBody {
+  flex: 1;
+  min-width: 0;
+}
+.cpCardName {
+  margin: 0 0 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.cpCardStatus {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.cpUrgent   .cpCardStatus { color: var(--color-error); }
+.cpDeferred .cpCardStatus { color: var(--color-accent-dark); }
+.cpCardStatusIcon { font-size: 0.75rem; }
+.cpCardNote {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.cpCardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.cpCardCategory {
+  font-size: 0.73rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.15rem 0.55rem;
+  white-space: nowrap;
+}
+.cpCardCost {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* ── Annual max progress bar ────────────────────────────── */
+.cpMaxBar {
+  margin-top: 0.25rem;
+}
+.cpMaxLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.4rem;
+}
+.cpMaxLabel strong {
+  color: var(--color-text);
+}
+.cpBarTrack {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.cpBarFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.6s ease;
+}
+.cpBarFill2026 { background: var(--color-primary); }
+.cpBarFill2027 { background: #1A8080; }  /* teal — distinct from primary */
+
+/* ── Compare sidebar ────────────────────────────────────── */
+.cpSidebar {
+  background: #EEF5F5;
+  border: 1.5px solid #C2D9D9;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.35rem;
+  position: sticky;
+  top: 84px;          /* clear the sticky navbar */
+}
+.cpSidebarTitle {
+  margin: 0 0 1rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1A8080;
+}
+.cpSidebarRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 0.85rem;
+}
+.cpSidebarRowRecommended {
+  padding-top: 0.75rem;
+  border-top: 1px solid #C2D9D9;
+}
+.cpSidebarLabel {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+.cpSidebarAmount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+.cpSidebarAmountHighlight {
+  color: var(--color-primary);
+}
+
+/* Savings chip */
+.cpSavingsChip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  margin: 0.25rem 0 1rem;
+  text-align: center;
+}
+.cpSavingsIcon { font-size: 1rem; }
+
+/* Share link */
+.cpShareLink {
+  display: block;
+  text-align: center;
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: #1A8080;
+  text-decoration: none;
+  padding: 0.4rem 0;
+  transition: opacity 0.15s;
+}
+.cpShareLink:hover { opacity: 0.75; text-decoration: underline; }
+
+.cpSidebarDivider {
+  height: 1px;
+  background: #C2D9D9;
+  margin: 0.85rem 0;
+}
+.cpSidebarNote {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ── Footer disclaimer ──────────────────────────────────── */
+.cpDisclaimer {
+  margin: 1.5rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .cpGrid {
+    grid-template-columns: 1fr;
+  }
+  .cpSidebar {
+    position: static;
+    order: -1;           /* show cost comparison above columns on mobile */
+  }
+}
+
+@media (max-width: 640px) {
+  .cpColumns {
+    grid-template-columns: 1fr;
+  }
+}

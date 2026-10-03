@@ -158,3 +158,87 @@ export async function mockProviders(zip) {
   // Shuffle slightly to make different ZIPs feel distinct
   return [...results].sort(() => Math.random() - 0.5);
 }
+
+// ── Care Plan Mock Data ───────────────────────────────────
+
+const CARE_PLAN_DATA = {
+  employee: {
+    name: 'Alex Johnson',
+    planName: 'Lincoln Dental Premier',
+    annualMaximum: 1500,
+  },
+  planYears: [
+    {
+      year: 2026,
+      annualMaxUsed: 1100,
+      annualMaxTotal: 1500,
+      procedures: [
+        {
+          id: 'proc-2026-1',
+          month: 'Oct',
+          name: 'Root canal, molar',
+          category: 'Major Restorative',
+          urgency: 'urgent',
+          urgencyLabel: 'Urgent: do now',
+          coveredPercent: 50,
+          estimatedCost: 950,
+          patientCost: 475,
+          note: null,
+        },
+        {
+          id: 'proc-2026-2',
+          month: 'Nov',
+          name: 'Cleaning and exam',
+          category: 'Preventive',
+          urgency: 'routine',
+          urgencyLabel: null,
+          coveredPercent: 100,
+          estimatedCost: 180,
+          patientCost: 0,
+          note: 'Covered 100%',
+        },
+      ],
+    },
+    {
+      year: 2027,
+      annualMaxUsed: 600,
+      annualMaxTotal: 1500,
+      procedures: [
+        {
+          id: 'proc-2027-1',
+          month: 'Jan',
+          name: 'Crown, porcelain',
+          category: 'Major Restorative',
+          urgency: 'deferred',
+          urgencyLabel: 'Moved to new year',
+          coveredPercent: 50,
+          estimatedCost: 1200,
+          patientCost: 600,
+          note: null,
+        },
+        {
+          id: 'proc-2027-2',
+          month: 'May',
+          name: 'Cleaning and exam',
+          category: 'Preventive',
+          urgency: 'routine',
+          urgencyLabel: null,
+          coveredPercent: 100,
+          estimatedCost: 180,
+          patientCost: 0,
+          note: 'Covered 100%',
+        },
+      ],
+    },
+  ],
+  comparison: {
+    allInCurrentYear: 1240,
+    recommended: 890,
+    savings: 350,
+  },
+};
+
+export async function mockCarePlan() {
+  await delay();
+  return JSON.parse(JSON.stringify(CARE_PLAN_DATA));
+}

@@ -16,7 +16,7 @@
  */
 
 import axios from 'axios';
-import { mockDentalCoverage, mockSubmitClaim, mockClaimStatus, mockProviders } from './dentalApi.mock';
+import { mockDentalCoverage, mockSubmitClaim, mockClaimStatus, mockProviders, mockCarePlan } from './dentalApi.mock';
 
 // ── Config ────────────────────────────────────────────────
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_API === 'true'
@@ -103,6 +103,19 @@ export async function fetchDentalProviders(zip) {
   return apiClient.get('/providers', { params: { zip } });
 }
 
+/**
+ * GET /api/dental/care-plan
+ * Returns the employee's recommended multi-year dental care plan,
+ * including scheduled procedures, urgency flags, estimated costs,
+ * and a year-over-year cost comparison.
+ *
+ * @returns {Promise<CarePlan>}
+ */
+export async function fetchCarePlan() {
+  if (USE_MOCK) return mockCarePlan();
+  return apiClient.get('/care-plan');
+}
+
 // ── JSDoc type definitions (for IDE hints) ────────────────
 
 /**
@@ -155,4 +168,40 @@ export async function fetchDentalProviders(zip) {
  * @property {string}  address
  * @property {string}  phone
  * @property {boolean} accepting
+ */
+
+/**
+ * @typedef {Object} CarePlanProcedure
+ * @property {string}      id
+ * @property {string}      month            - 3-letter month abbreviation
+ * @property {string}      name             - Procedure display name
+ * @property {string}      category         - e.g. "Preventive", "Major Restorative"
+ * @property {string}      urgency          - "urgent" | "routine" | "deferred"
+ * @property {string|null} urgencyLabel     - Human-readable urgency note
+ * @property {number}      coveredPercent   - 0-100
+ * @property {number}      estimatedCost    - Total estimated cost in dollars
+ * @property {number}      patientCost      - Employee out-of-pocket cost
+ * @property {string|null} note             - e.g. "Covered 100%"
+ */
+
+/**
+ * @typedef {Object} CarePlanYear
+ * @property {number}               year
+ * @property {number}               annualMaxUsed
+ * @property {number}               annualMaxTotal
+ * @property {CarePlanProcedure[]}  procedures
+ */
+
+/**
+ * @typedef {Object} CarePlanComparison
+ * @property {number} allInCurrentYear  - Total cost if all done this year
+ * @property {number} recommended       - Total cost under the recommended split
+ * @property {number} savings           - Difference (savings)
+ */
+
+/**
+ * @typedef {Object} CarePlan
+ * @property {{ name: string, planName: string, annualMaximum: number }} employee
+ * @property {CarePlanYear[]}       planYears
+ * @property {CarePlanComparison}   comparison
  */

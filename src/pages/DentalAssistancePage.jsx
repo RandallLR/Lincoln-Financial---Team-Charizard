@@ -4,11 +4,13 @@ import {
   submitDentalClaim,
   fetchClaimStatus,
   fetchDentalProviders,
+  fetchCarePlan,
 } from '../services/dentalApi';
 import styles from './DentalAssistancePage.module.css';
 
 const TABS = [
-  { id: 'coverage',   label: 'My Coverage'       },
+  { id: 'careplan',   label: 'My Care Plan'       },
+  { id: 'coverage',   label: 'My Coverage'        },
   { id: 'claim',      label: 'Submit a Claim'     },
   { id: 'status',     label: 'Claim Status'       },
   { id: 'providers',  label: 'Find a Provider'    },
@@ -19,7 +21,7 @@ const TABS = [
  * Each tab dispatches a different API endpoint.
  */
 export default function DentalAssistancePage() {
-  const [activeTab, setActiveTab] = useState('coverage');
+  const [activeTab, setActiveTab] = useState('careplan');
 
   return (
     <div className={styles.page}>
@@ -50,12 +52,225 @@ export default function DentalAssistancePage() {
 
       {/* Tab panels */}
       <div className={styles.panel}>
+        {activeTab === 'careplan'  && <CarePlanPanel />}
         {activeTab === 'coverage'  && <CoveragePanel />}
         {activeTab === 'claim'     && <ClaimPanel />}
         {activeTab === 'status'    && <ClaimStatusPanel />}
         {activeTab === 'providers' && <ProvidersPanel />}
       </div>
     </div>
+  );
+}
+
+/* ── Care Plan panel ────────────────────────────────────── */
+function CarePlanPanel() {
+  const [data, setData]       = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState('');
+
+  async function handleFetch() {
+    setLoading(true);
+    setError('');
+    try {
+      const result = await fetchCarePlan();
+      setData(result);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!data) {
+    return (
+      <section aria-labelledby="tab-careplan" className={styles.cpEmptyState}>
+        <div className={styles.cpEmptyIcon} aria-hidden="true">📋</div>
+        <h2 className={styles.cpEmptyTitle}>Your Recommended Care Plan</h2>
+        <p className={styles.cpEmptyDesc}>
+          See a personalised multi-year treatment schedule based on your coverage and dental
+          history. Procedures are timed across plan years to maximise your annual benefit and
+          minimise out-of-pocket costs.
+        </p>
+        <button
+          className={styles.primaryBtn}
+          onClick={handleFetch}
+          disabled={loading}
+          aria-busy={loading}
+        >
+          {loading ? 'Loading care plan…' : 'View My Care Plan'}
+        </button>
+        {error && <p className={styles.error} role="alert">{error}</p>}
+      </section>
+    );
+  }
+
+  const { planYears, comparison } = data;
+
+  // Urgency → display config
+  const URGENCY_CONFIG = {
+    urgent:   { className: styles.cpUrgent,   icon: '⚠️' },
+    deferred: { className: styles.cpDeferred, icon: '📅' },
+    routine:  { className: styles.cpRoutine,  icon: null  },
+  };
+
+  return (
+    <section aria-labelledby="tab-careplan">
+      {/* ── Header strip ── */}
+      <div className={styles.cpHeader}>
+        <div>
+          <h2 className={styles.cpMainTitle}>Your Recommended Care Plan</h2>
+          <p className={styles.cpSubtitle}>
+            Procedures are scheduled across plan years to stay under your{' '}
+            <strong>${data.employee.annualMaximum.toLocaleString()}</strong> annual benefit
+            maximum and reduce what you pay out-of-pocket.
+          </p>
+        </div>
+      </div>
+
+      {/* ── Legend ── */}
+      <div className={styles.cpLegend} role="list" aria-label="Status legend">
+        <span className={styles.cpLegendItem} role="listitem">
+          <span className={`${styles.cpLegendDot} ${styles.cpLegendDotUrgent}`} aria-hidden="true" />
+          Urgent — do now
+        </span>
+        <span className={styles.cpLegendItem} role="listitem">
+          <span className={`${styles.cpLegendDot} ${styles.cpLegendDotDeferred}`} aria-hidden="true" />
+          Moved to next year
+        </span>
+        <span className={styles.cpLegendItem} role="listitem">
+          <span className={`${styles.cpLegendDot} ${styles.cpLegendDotRoutine}`} aria-hidden="true" />
+          Routine / Preventive
+        </span>
+      </div>
+
+      {/* ── Main grid: plan columns + compare sidebar ── */}
+      <div className={styles.cpGrid}>
+
+        {/* Plan year columns */}
+        <div className={styles.cpColumns}>
+          {planYears.map((year, colIdx) => (
+            <div key={year.year} className={styles.cpColumn}>
+              {/* Year badge + heading */}
+              <div className={styles.cpYearHeader}>
+                <span className={styles.cpYearBadge} aria-hidden="true">{colIdx + 1}</span>
+                <h3 className={styles.cpYearTitle}>{year.year} plan year</h3>
+              </div>
+
+              {/* Procedure cards */}
+              <div className={styles.cpProcedures} role="list" aria-label={`${year.year} procedures`}>
+                {year.procedures.map((proc) => {
+                  const urgency = URGENCY_CONFIG[proc.urgency] ?? URGENCY_CONFIG.routine;
+                  return (
+                    <div
+                      key={proc.id}
+                      role="listitem"
+                      className={`${styles.cpCard} ${urgency.className}`}
+                    >
+                      <div className={styles.cpCardTop}>
+                        <span className={styles.cpCardMonth}>{proc.month}</span>
+                        <div className={styles.cpCardBody}>
+                          <p className={styles.cpCardName}>{proc.name}</p>
+                          {proc.urgencyLabel && (
+                            <p className={styles.cpCardStatus}>
+                              {urgency.icon && (
+                                <span className={styles.cpCardStatusIcon} aria-hidden="true">
+                                  {urgency.icon}
+                                </span>
+                              )}
+                              {proc.urgencyLabel}
+                            </p>
+                          )}
+                          {proc.note && (
+                            <p className={styles.cpCardNote}>{proc.note}</p>
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.cpCardMeta}>
+                        <span className={styles.cpCardCategory}>{proc.category}</span>
+                        <span className={styles.cpCardCost}>
+                          {proc.patientCost === 0
+                            ? 'No cost to you'
+                            : `You pay ~$${proc.patientCost.toLocaleString()}`}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Annual max usage bar */}
+              <div className={styles.cpMaxBar}>
+                <div className={styles.cpMaxLabel}>
+                  <span>Annual max used</span>
+                  <span>
+                    <strong>${year.annualMaxUsed.toLocaleString()}</strong> of $
+                    {year.annualMaxTotal.toLocaleString()}
+                  </span>
+                </div>
+                <div
+                  className={styles.cpBarTrack}
+                  role="progressbar"
+                  aria-valuenow={year.annualMaxUsed}
+                  aria-valuemin={0}
+                  aria-valuemax={year.annualMaxTotal}
+                  aria-label={`${year.year} annual benefit used`}
+                >
+                  <div
+                    className={`${styles.cpBarFill} ${colIdx === 0 ? styles.cpBarFill2026 : styles.cpBarFill2027}`}
+                    style={{ width: `${Math.min(100, (year.annualMaxUsed / year.annualMaxTotal) * 100)}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Compare sidebar */}
+        <aside className={styles.cpSidebar} aria-label="Cost comparison">
+          <h3 className={styles.cpSidebarTitle}>Cost Comparison</h3>
+
+          <div className={styles.cpSidebarRow}>
+            <span className={styles.cpSidebarLabel}>If all done in {planYears[0]?.year}</span>
+            <span className={styles.cpSidebarAmount}>${comparison.allInCurrentYear.toLocaleString()}</span>
+          </div>
+
+          <div className={`${styles.cpSidebarRow} ${styles.cpSidebarRowRecommended}`}>
+            <span className={styles.cpSidebarLabel}>Recommended plan</span>
+            <span className={`${styles.cpSidebarAmount} ${styles.cpSidebarAmountHighlight}`}>
+              ${comparison.recommended.toLocaleString()}
+            </span>
+          </div>
+
+          <div className={styles.cpSavingsChip} role="status" aria-live="polite">
+            <span className={styles.cpSavingsIcon} aria-hidden="true">💰</span>
+            You save <strong>${comparison.savings.toLocaleString()}</strong>
+          </div>
+
+          <a
+            href="mailto:dentist@example.com?subject=My%20Lincoln%20Dental%20Care%20Plan"
+            className={styles.cpShareLink}
+            aria-label="Share this care plan with your dentist via email"
+          >
+            Share with my dentist →
+          </a>
+
+          <div className={styles.cpSidebarDivider} aria-hidden="true" />
+
+          <p className={styles.cpSidebarNote}>
+            Costs are estimates based on your current plan coverage. Actual amounts may vary
+            by provider and treatment complexity.
+          </p>
+        </aside>
+      </div>
+
+      {/* ── Footer disclaimer ── */}
+      <p className={styles.cpDisclaimer}>
+        <em>
+          Urgent care is never delayed. Timing suggestions are for elective care only — confirm
+          scheduling with your dentist.
+        </em>
+      </p>
+    </section>
   );
 }
 
