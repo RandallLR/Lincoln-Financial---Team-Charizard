@@ -1,0 +1,42 @@
+/* ── Footer ────────────────────────────────────────────── */
+.footer {
+  background: #001e42;
+  color: #8aaecf;
+  padding: 1.5rem 2rem;
+  margin-top: auto;
+}
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+}
+.copy {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #cde0f5;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+}
+.link {
+  color: #8aaecf;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.disclaimer {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #556e87;
+}

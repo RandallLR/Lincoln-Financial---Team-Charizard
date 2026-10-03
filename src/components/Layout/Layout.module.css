@@ -1,0 +1,16 @@
+/* ── Shell ─────────────────────────────────────────────── */
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.main {
+  flex: 1;
+  background: #f4f7fb;
+  padding: 2rem;
+  outline: none; /* skip-to-content target — suppress browser outline */
+}
+
+@media (max-width: 768px) {
+  .main { padding: 1.25rem 1rem; }
+}

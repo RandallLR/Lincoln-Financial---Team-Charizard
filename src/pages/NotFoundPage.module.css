@@ -1,0 +1,61 @@
+/* ── 404 Page ───────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f7fb;
+  padding: 2rem 1rem;
+}
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 3rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.code {
+  display: block;
+  font-size: 5rem;
+  font-weight: 800;
+  color: #e8a01c;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.heading {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  color: #002b5c;
+}
+.body {
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+.homeBtn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: #002b5c;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+.homeBtn:hover { background: #003878; }
+.contactLink {
+  font-size: 0.85rem;
+  color: #003878;
+  text-decoration: none;
+}
+.contactLink:hover { text-decoration: underline; }

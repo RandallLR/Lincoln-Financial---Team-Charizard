@@ -1,0 +1,129 @@
+/* ── Login Page ─────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #001e42 0%, #003878 100%);
+  padding: 2rem 1rem;
+}
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+.logoMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #e8a01c;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #002b5c;
+  flex-shrink: 0;
+}
+.company {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #002b5c;
+}
+.portalTitle {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #6b7a8d;
+}
+
+.heading {
+  font-size: 1.4rem;
+  color: #002b5c;
+  margin: 0 0 1.25rem;
+}
+
+/* Error */
+.errorBanner {
+  background: #fdecea;
+  border: 1px solid #f4c5c0;
+  color: #b71c1c;
+  padding: 0.6rem 0.85rem;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* Fields */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.35rem;
+}
+.input {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  color: #111827;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input:focus {
+  outline: none;
+  border-color: #002b5c;
+  box-shadow: 0 0 0 3px rgba(0, 43, 92, 0.15);
+}
+
+.forgotLink {
+  display: block;
+  text-align: right;
+  font-size: 0.8rem;
+  color: #003878;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+}
+.forgotLink:hover { text-decoration: underline; }
+
+.submitBtn {
+  width: 100%;
+  padding: 0.65rem;
+  background: #002b5c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.submitBtn:hover:not(:disabled) { background: #003878; }
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.helpText {
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+  color: #6b7a8d;
+  text-align: center;
+}
+.helpLink {
+  color: #003878;
+  text-decoration: none;
+}
+.helpLink:hover { text-decoration: underline; }

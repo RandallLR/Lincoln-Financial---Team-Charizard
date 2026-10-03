@@ -1,0 +1,141 @@
+/* ── Navbar ────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  background: #002b5c;   /* Lincoln Financial navy */
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+.logoMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #e8a01c; /* Lincoln gold */
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #002b5c;
+  letter-spacing: 0.5px;
+}
+.brandName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.portalLabel {
+  font-size: 0.75rem;
+  color: #a8c4e0;
+  border-left: 1px solid rgba(255,255,255,0.25);
+  padding-left: 0.75rem;
+  line-height: 1;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.navList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.25rem;
+}
+.link {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  color: #cde0f5;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background 0.15s, color 0.15s;
+}
+.link:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* User area */
+.userArea {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.userName {
+  font-size: 0.85rem;
+  color: #a8c4e0;
+}
+.logoutBtn {
+  padding: 0.35rem 0.9rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.15s;
+}
+.logoutBtn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* Hamburger — hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #002b5c;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .navOpen { display: flex; }
+  .navList { flex-direction: column; width: 100%; }
+}

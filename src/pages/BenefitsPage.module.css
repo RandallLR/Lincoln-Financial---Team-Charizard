@@ -1,0 +1,53 @@
+/* ── Benefits Page ──────────────────────────────────────── */
+.page { max-width: 1100px; margin: 0 auto; }
+
+.pageHeader { margin-bottom: 1.75rem; }
+.heading    { margin: 0 0 0.35rem; font-size: 1.6rem; color: #002b5c; }
+.subheading { margin: 0; color: #4b5563; font-size: 0.9rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cardHeader { display: flex; align-items: center; gap: 0.6rem; }
+.icon       { font-size: 1.5rem; }
+.cardTitle  { margin: 0; font-size: 1rem; font-weight: 700; color: #002b5c; }
+
+.currentPlan { margin: 0; font-size: 0.875rem; color: #374151; }
+.planLabel   { font-weight: 600; color: #002b5c; }
+
+.ctaLink {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: #003878;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid #e8a01c;
+}
+.ctaLink:hover { color: #e8a01c; }
+
+/* Note */
+.note {
+  background: #eef4fb;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.6;
+}
+.noteTitle { margin: 0 0 0.5rem; font-size: 0.95rem; color: #002b5c; }
+.note a    { color: #003878; }
