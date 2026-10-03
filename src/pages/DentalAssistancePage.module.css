@@ -1,16 +1,215 @@
 /* ── Dental Assistance Page ─────────────────────────────── */
-.page { max-width: 900px; margin: 0 auto; }
+.page { max-width: 1100px; margin: 0 auto; }
 
+/* Page header */
 .pageHeader { margin-bottom: 1.5rem; }
 .heading {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.35rem;
   font-size: 1.6rem;
   color: var(--color-primary);
   font-weight: 700;
 }
 .subheading { margin: 0; color: var(--color-text-secondary); font-size: 0.9rem; }
 
-/* Tab bar */
+/* ── Two-column hero grid ───────────────────────────────── */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: start;
+}
+
+/* ── LEFT: Coverage card ────────────────────────────────── */
+.coverageCard {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.cardHeading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+/* Progress bars */
+.barBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.barLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.barLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+.barValue {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+.barOf {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+.barTrack {
+  width: 100%;
+  height: 10px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.barFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.6s ease;
+}
+/* Bar color states */
+.barGood    { background: #2e9e6b; }          /* green  — healthy */
+.barWarning { background: var(--color-accent); } /* orange — getting close */
+.barDanger  { background: #c0392b; }          /* red    — critical */
+
+.barCaption {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Expiring benefits alert ────────────────────────────── */
+.expiryAlert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  flex-wrap: wrap;
+}
+.expiryLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.expiryIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.expiryTitle {
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.expiryBody {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #fff;
+  line-height: 1.4;
+}
+.expiryBtn {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: #fff;
+  color: var(--color-accent-dark);
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.expiryBtn:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* ── RIGHT: Quick links card ────────────────────────────── */
+.quickLinksCard {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quickList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quickItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1rem;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.quickItem:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+.quickIcon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.quickText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+.quickLabel {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.3;
+}
+.quickDesc {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+.quickArrow {
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Tab bar ────────────────────────────────────────────── */
 .tabBar {
   display: flex;
   flex-wrap: wrap;
@@ -42,7 +241,7 @@
   background: var(--color-primary-faint);
 }
 
-/* Panel */
+/* ── Tab panel ──────────────────────────────────────────── */
 .panel {
   background: var(--color-surface);
   border: 1.5px solid var(--color-border);
@@ -72,11 +271,11 @@
 .primaryBtn:disabled { opacity: 0.55; cursor: not-allowed; }
 
 /* Forms */
-.form        { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.25rem; }
-.formRow     { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
-.inlineForm  { display: flex; gap: 0.75rem; align-items: flex-end; margin-bottom: 1.35rem; flex-wrap: wrap; }
-.field       { display: flex; flex-direction: column; gap: 0.3rem; }
-.label       { font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); }
+.form       { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.25rem; }
+.formRow    { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.inlineForm { display: flex; gap: 0.75rem; align-items: flex-end; margin-bottom: 1.35rem; flex-wrap: wrap; }
+.field      { display: flex; flex-direction: column; gap: 0.3rem; }
+.label      { font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); }
 .input {
   padding: 0.55rem 0.8rem;
   border: 1.5px solid var(--color-border);
@@ -127,7 +326,7 @@
 .dl dt { font-weight: 600; color: var(--color-text-secondary); }
 .dl dd { margin: 0; color: var(--color-text); }
 
-/* Claim status colors */
+/* Status pill colors */
 .status_approved   { color: var(--color-success); font-weight: 700; }
 .status_pending    { color: var(--color-warning); font-weight: 700; }
 .status_denied     { color: var(--color-error);   font-weight: 700; }
@@ -150,24 +349,25 @@
 .providerSpec  { grid-column: 1; font-size: 0.8rem;  color: var(--color-text-muted); }
 .providerAddr  { grid-column: 1; font-size: 0.85rem; color: var(--color-text-secondary); font-style: normal; }
 .providerPhone { grid-column: 1; font-size: 0.85rem; color: var(--color-primary); font-weight: 500; }
-
 .networkBadge  {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  font-size: 0.73rem;
-  font-weight: 700;
+  grid-column: 2; grid-row: 1 / 3;
+  font-size: 0.73rem; font-weight: 700;
   padding: 0.3rem 0.7rem;
   border-radius: var(--radius-pill);
-  align-self: start;
-  white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
+  align-self: start; white-space: nowrap;
+  text-transform: uppercase; letter-spacing: 0.4px;
 }
 .accepting    { background: var(--color-success-bg); color: var(--color-success); }
 .notAccepting { background: var(--color-error-bg);   color: var(--color-error); }
 
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .heroGrid { grid-template-columns: 1fr; }
+  .quickLinksCard { order: -1; } /* Quick links stack above coverage on mobile */
+}
 @media (max-width: 600px) {
   .formRow { grid-template-columns: 1fr; }
+  .expiryAlert { flex-direction: column; align-items: flex-start; }
 }
 
 
