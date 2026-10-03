@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import {
   fetchDentalCoverage,
   submitDentalClaim,
@@ -7,6 +8,8 @@ import {
   fetchDentalProviders,
   fetchCarePlan,
 } from '../services/dentalApi';
+=======
+>>>>>>> 766a7cf06907da17b594763d6738b32ebc5ad1b0
 import styles from './DentalAssistancePage.module.css';
 
 <<<<<<< HEAD
@@ -53,6 +56,7 @@ const QUICK_LINKS = [
   },
 ];
 
+<<<<<<< HEAD
 const TABS = [
   { id: 'coverage',  label: 'My Coverage'    },
   { id: 'claim',     label: 'Submit a Claim' },
@@ -66,6 +70,9 @@ export default function DentalAssistancePage() {
   const [activeTab, setActiveTab] = useState('careplan');
 =======
   const [activeTab, setActiveTab] = useState('coverage');
+=======
+export default function DentalAssistancePage() {
+>>>>>>> 766a7cf06907da17b594763d6738b32ebc5ad1b0
   const s = PLAN_SNAPSHOT;
 
   const annualUsedPct      = Math.min(100, Math.round((s.annualUsed      / s.annualMaximum)     * 100));
@@ -194,6 +201,7 @@ export default function DentalAssistancePage() {
           </ul>
         </aside>
       </div>
+<<<<<<< HEAD
 
       {/* ── Tabs ────────────────────────────────────────── */}
       <div className={styles.tabBar} role="tablist" aria-label="Dental portal sections">
@@ -682,6 +690,8 @@ function Field({ label, name, value, onChange, type = 'text', placeholder, requi
         required={required}
         aria-required={required}
       />
+=======
+>>>>>>> 766a7cf06907da17b594763d6738b32ebc5ad1b0
     </div>
   );
 }
