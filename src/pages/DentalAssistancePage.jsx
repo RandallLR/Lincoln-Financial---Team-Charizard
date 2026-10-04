@@ -1,72 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  fetchDentalCoverage,
+  submitDentalClaim,
+  fetchClaimStatus,
+  fetchDentalProviders,
+} from '../services/dentalApi';
 import styles from './DentalAssistancePage.module.css';
 
-// ── Mock coverage snapshot shown at page load ─────────────
-// In production pull this from fetchDentalCoverage() on mount.
+// ── Static snapshot for the hero coverage card ────────────
 const PLAN_SNAPSHOT = {
-  planName:              'Lincoln Dental Premier',
-  annualMaximum:         2000,
-  annualUsed:            1600,   // $1,600 of $2,000 used
-  deductible:            50,
-  deductibleMet:         50,     // fully met
-  preventiveTotal:       100,    // 100 % covered — track dollar value
-  preventiveUsed:        0,      // $0 of preventive used this year
-  preventiveDollarMax:   500,    // approx dollar value of preventive benefit
-  expiringAmount:        400,
-  expiringDays:          86,
+  planName:            'Lincoln Dental Premier',
+  annualMaximum:       2000,
+  annualUsed:          1055,
+  deductible:          50,
+  deductibleMet:       50,
+  preventiveUsed:      0,
+  preventiveDollarMax: 500,
+  expiringAmount:      275,
+  expiringDays:        62,
 };
 
 const QUICK_LINKS = [
   {
-    icon: null,
+    icon: '🤖',
+    label: 'AI Coverage Assistant',
+    desc: 'Chat with DentalBot to estimate costs, understand coverage, and find providers.',
+    to: '/benefits/dental/ai-chat',
+    highlight: true,
+  },
+  {
+    icon: '📋',
     label: 'View / Compare Plans',
-    desc: 'Browse and compare available dental plan options.',
-    to: '/benefits/dental/compare-plans',
+    desc:  'See your recommended care plan and year-over-year cost breakdown.',
+    to:    '/benefits/dental/compare-plans',
   },
   {
-    icon: null,
     label: 'Add Qualifying Life Event',
-    desc: 'Report a QLE to update your coverage outside open enrollment.',
-    to: '/life-event',
+    desc:  'Report a QLE to update your coverage outside open enrollment.',
+    to:    '/life-event',
   },
   {
-    icon: null,
     label: 'Schedule a Service',
-    desc: 'Book a cleaning, exam, or specialist appointment.',
-    to: '/benefits/dental/schedule',
+    desc:  'Book a cleaning, exam, or specialist appointment.',
+    to:    '/benefits/dental/schedule',
   },
 ];
 
 export default function DentalAssistancePage() {
   const s = PLAN_SNAPSHOT;
 
-  const annualUsedPct      = Math.min(100, Math.round((s.annualUsed      / s.annualMaximum)     * 100));
-  const deductiblePct      = Math.min(100, Math.round((s.deductibleMet   / s.deductible)        * 100));
-  const preventiveUsedPct  = Math.min(100, Math.round((s.preventiveUsed  / s.preventiveDollarMax) * 100));
-  const preventiveLeftPct  = 100 - preventiveUsedPct;
+  const annualUsedPct     = Math.min(100, Math.round((s.annualUsed      / s.annualMaximum)       * 100));
+  const deductiblePct     = Math.min(100, Math.round((s.deductibleMet   / s.deductible)          * 100));
+  const preventiveUsedPct = Math.min(100, Math.round((s.preventiveUsed  / s.preventiveDollarMax)  * 100));
+  const preventiveLeftPct = 100 - preventiveUsedPct;
 
   return (
     <div className={styles.page}>
 
-      {/* ── Page title ──────────────────────────────────── */}
+      {/* ── Page header ─────────────────────────────────── */}
       <header className={styles.pageHeader}>
         <h1 className={styles.heading}>Your Dental Plan Coverage Overview</h1>
         <p className={styles.subheading}>
-          {s.planName} — manage claims, coverage, and in-network providers.
+          {s.planName} — manage claims, coverage, and find in-network providers.
         </p>
       </header>
 
-      {/* ── Two-column hero: Coverage Details + Quick Links */}
+      {/* ── Hero grid: coverage snapshot + quick links ─── */}
       <div className={styles.heroGrid}>
 
-        {/* LEFT — Plan Coverage Details */}
+        {/* LEFT — Coverage snapshot */}
         <section className={styles.coverageCard} aria-labelledby="coverage-heading">
           <h2 id="coverage-heading" className={styles.cardHeading}>
-            Your Current Plan Coverage Details:
+            Your Current Plan Coverage Details
           </h2>
 
-          {/* 1. Annual Maximum Used */}
           <div className={styles.barBlock}>
             <div className={styles.barLabelRow}>
               <span className={styles.barLabel}>Annual Maximum Used</span>
@@ -74,11 +82,20 @@ export default function DentalAssistancePage() {
                 ${s.annualUsed.toLocaleString()} <span className={styles.barOf}>of</span> ${s.annualMaximum.toLocaleString()}
               </span>
             </div>
-            <div className={styles.barTrack} role="progressbar"
-              aria-valuenow={annualUsedPct} aria-valuemin={0} aria-valuemax={100}
-              aria-label={`Annual maximum: ${annualUsedPct}% used`}>
+            <div
+              className={styles.barTrack}
+              role="progressbar"
+              aria-valuenow={annualUsedPct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Annual maximum: ${annualUsedPct}% used`}
+            >
               <div
-                className={`${styles.barFill} ${annualUsedPct >= 80 ? styles.barDanger : annualUsedPct >= 50 ? styles.barWarning : styles.barGood}`}
+                className={`${styles.barFill} ${
+                  annualUsedPct >= 80 ? styles.barDanger
+                  : annualUsedPct >= 50 ? styles.barWarning
+                  : styles.barGood
+                }`}
                 style={{ width: `${annualUsedPct}%` }}
               />
             </div>
@@ -87,7 +104,6 @@ export default function DentalAssistancePage() {
             </p>
           </div>
 
-          {/* 2. Deductible Met */}
           <div className={styles.barBlock}>
             <div className={styles.barLabelRow}>
               <span className={styles.barLabel}>Deductible Met</span>
@@ -95,20 +111,26 @@ export default function DentalAssistancePage() {
                 ${s.deductibleMet} <span className={styles.barOf}>of</span> ${s.deductible}
               </span>
             </div>
-            <div className={styles.barTrack} role="progressbar"
-              aria-valuenow={deductiblePct} aria-valuemin={0} aria-valuemax={100}
-              aria-label={`Deductible: ${deductiblePct}% met`}>
+            <div
+              className={styles.barTrack}
+              role="progressbar"
+              aria-valuenow={deductiblePct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Deductible: ${deductiblePct}% met`}
+            >
               <div
                 className={`${styles.barFill} ${deductiblePct === 100 ? styles.barGood : styles.barWarning}`}
                 style={{ width: `${deductiblePct}%` }}
               />
             </div>
             <p className={styles.barCaption}>
-              {deductiblePct === 100 ? '✓ Deductible fully met' : `$${s.deductible - s.deductibleMet} still needed`}
+              {deductiblePct === 100
+                ? '✓ Deductible fully met'
+                : `$${s.deductible - s.deductibleMet} still needed`}
             </p>
           </div>
 
-          {/* 3. Preventive Services Still Available */}
           <div className={styles.barBlock}>
             <div className={styles.barLabelRow}>
               <span className={styles.barLabel}>Preventive Services Still Available</span>
@@ -116,9 +138,14 @@ export default function DentalAssistancePage() {
                 {preventiveLeftPct}% <span className={styles.barOf}>remaining</span>
               </span>
             </div>
-            <div className={styles.barTrack} role="progressbar"
-              aria-valuenow={preventiveLeftPct} aria-valuemin={0} aria-valuemax={100}
-              aria-label={`Preventive services: ${preventiveLeftPct}% available`}>
+            <div
+              className={styles.barTrack}
+              role="progressbar"
+              aria-valuenow={preventiveLeftPct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Preventive services: ${preventiveLeftPct}% available`}
+            >
               <div
                 className={`${styles.barFill} ${styles.barGood}`}
                 style={{ width: `${preventiveLeftPct}%` }}
@@ -129,10 +156,9 @@ export default function DentalAssistancePage() {
             </p>
           </div>
 
-          {/* 4. Expiring benefits alert */}
           <div className={styles.expiryAlert} role="status">
             <div className={styles.expiryLeft}>
-              <span className={styles.expiryIcon} aria-hidden="true"></span>
+              <span className={styles.expiryIcon} aria-hidden="true">⏳</span>
               <div>
                 <p className={styles.expiryTitle}>Benefits expiring soon</p>
                 <p className={styles.expiryBody}>
@@ -141,22 +167,23 @@ export default function DentalAssistancePage() {
                 </p>
               </div>
             </div>
-            <a href="/benefits/dental/schedule" className={styles.expiryBtn}>
-              Book your cleaning →
-            </a>
+            <Link to="/benefits/dental/compare-plans" className={styles.expiryBtn}>
+              View care plan →
+            </Link>
           </div>
         </section>
 
-        {/* RIGHT — Quick Links */}
+        {/* RIGHT — Quick links */}
         <aside className={styles.quickLinksCard} aria-labelledby="quick-links-heading">
           <h2 id="quick-links-heading" className={styles.cardHeading}>Quick Links</h2>
           <ul className={styles.quickList} role="list">
             {QUICK_LINKS.map((ql) => (
               <li key={ql.to}>
-                <Link to={ql.to} className={styles.quickItem}>
-                  {ql.icon && (
-                    <span className={styles.quickIcon} aria-hidden="true">{ql.icon}</span>
-                  )}
+                <Link
+                  to={ql.to}
+                  className={`${styles.quickItem} ${ql.highlight ? styles.quickItemHighlight : ''}`}
+                >
+                  <span className={styles.quickIcon} aria-hidden="true">{ql.icon}</span>
                   <div className={styles.quickText}>
                     <span className={styles.quickLabel}>{ql.label}</span>
                     <span className={styles.quickDesc}>{ql.desc}</span>
@@ -168,6 +195,7 @@ export default function DentalAssistancePage() {
           </ul>
         </aside>
       </div>
+
     </div>
   );
 }

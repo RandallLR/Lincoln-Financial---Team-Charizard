@@ -22,12 +22,7 @@ const QUICK_LINKS = [
     title: 'My Profile',
     desc: 'Update personal information, dependents, and emergency contacts.',
   },
-  {
-    to: '/life-event',
-    icon: '📋',
-    title: 'Report a Life Event',
-    desc: 'Marriage, birth, or adoption? Add a family member to your dental plan.',
-  },
+
 ];
 
 const ANNOUNCEMENTS = [
