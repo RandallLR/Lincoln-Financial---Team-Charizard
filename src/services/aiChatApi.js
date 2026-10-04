@@ -266,89 +266,59 @@ DENTAL GLOSSARY (use these definitions when explaining terms):
 ${Object.entries(DENTAL_GLOSSARY).map(([k, v]) => `- ${k}: ${v}`).join('\n')}`;
 }
 
-// ── Ollama function/tool definition ───────────────────────
-// Ollama's OpenAI-compatible API supports tool calling.
-// We use a single combined tool so smaller local models (phi3, llama3)
-// only need to produce one JSON object — more reliable than parallel calls.
-const OLLAMA_TOOLS = [
-  {
-    type: 'function',
-    function: {
-      name: 'dental_response_metadata',
-      description:
-        'Always call this tool alongside your text response to provide ' +
-        'structured metadata: cost estimates when a procedure is discussed, ' +
-        'whether to show the provider panel, and suggested follow-up questions.',
-      parameters: {
-        type: 'object',
-        required: ['suggestedReplies'],
-        properties: {
-          suggestedReplies: {
-            type: 'array',
-            items: { type: 'string' },
-            description: '3-4 short follow-up question chips for the user',
-          },
-          showProviders: {
-            type: 'boolean',
-            description: 'Set true when the response mentions finding a dentist or provider',
-          },
-          estimate: {
-            type: 'object',
-            description: 'Include only when the response gives a cost estimate for a procedure',
-            properties: {
-              procedureLabel:  { type: 'string' },
-              category:        { type: 'string', description: 'preventive | basic_restorative | major_restorative | orthodontia | cosmetic' },
-              costLow:         { type: 'number' },
-              costHigh:        { type: 'number' },
-              coveragePercent: { type: 'number' },
-              insurancePays:   { type: 'number' },
-              youPay:          { type: 'number' },
-              isInNetwork:     { type: 'boolean' },
-              deductibleApplied: { type: 'number' },
-            },
-          },
-        },
-      },
-    },
-  },
-];
+// ── Post-response metadata extraction ─────────────────────
+// phi3 (and most small local models) don't reliably emit structured
+// tool_calls. Instead we derive metadata from the user's original
+// message using the same keyword logic the mock uses.
+// This means the LLM handles natural language quality while our code
+// handles the structured side panel updates — no tool calling needed.
 
-// ── Parse Ollama tool_calls from a response ────────────────
-function parseToolCalls(toolCalls) {
-  const result = { estimate: null, providerTrigger: false, suggestedReplies: [] };
-  if (!toolCalls?.length) return result;
+/**
+ * Derive side-panel metadata from the user message + detected network.
+ * Returns the same shape as parseToolCalls used to, so the rest of the
+ * sendChatMessage function is unchanged.
+ */
+function deriveMetadata(userMessage, isInNetwork, coverage) {
+  const lower = userMessage.toLowerCase();
 
-  for (const call of toolCalls) {
-    try {
-      const args = JSON.parse(call.function.arguments);
-      // Single combined tool
-      if (call.function.name === 'dental_response_metadata') {
-        if (args.suggestedReplies?.length) {
-          result.suggestedReplies = args.suggestedReplies;
-        }
-        if (args.showProviders) {
-          result.providerTrigger = true;
-        }
-        if (args.estimate?.procedureLabel) {
-          const e = args.estimate;
-          result.estimate = {
-            procedure:        e.procedureLabel,
-            category:         e.category ?? 'unknown',
-            typicalCostRange: { low: e.costLow ?? 0, high: e.costHigh ?? 0 },
-            estimatedCost:    Math.round(((e.costLow ?? 0) + (e.costHigh ?? 0)) / 2),
-            coveragePercent:  e.coveragePercent ?? 0,
-            insurancePays:    e.insurancePays ?? 0,
-            youPay:           e.youPay ?? 0,
-            isInNetwork:      e.isInNetwork ?? true,
-            deductibleApplied: e.deductibleApplied ?? 0,
-          };
-        }
-      }
-    } catch {
-      // Malformed tool call args — skip silently
+  // Suggested replies — context-aware defaults
+  const suggestedReplies = (() => {
+    if (lower.includes('crown') || lower.includes('implant') || lower.includes('bridge'))
+      return ['Show available providers', 'What is pre-authorization?', 'How much is a filling?', 'What is coinsurance?'];
+    if (lower.includes('cleaning') || lower.includes('exam') || lower.includes('xray'))
+      return ['How much is a filling?', 'Show available providers', 'What does my plan cover?', 'What is my deductible?'];
+    if (lower.includes('provider') || lower.includes('dentist') || lower.includes('find'))
+      return ['Show all providers', 'How much is a cleaning?', 'What does my plan cover?', 'What is my deductible?'];
+    if (lower.includes('deductible') || lower.includes('copay') || lower.includes('coinsurance'))
+      return ['What procedures are covered?', 'How much is a crown?', 'Show available providers', 'What is my annual maximum?'];
+    return ['How much is a crown?', 'What does my plan cover?', 'Show available providers', 'What is my deductible?'];
+  })();
+
+  // Provider trigger — show providers panel when relevant
+  const providerTrigger =
+    lower.includes('provider') ||
+    lower.includes('dentist') ||
+    lower.includes('find') ||
+    lower.includes('near') ||
+    lower.includes('network') ||
+    lower.includes('crown') ||
+    lower.includes('implant') ||
+    lower.includes('root canal');
+
+  // Cost estimate — compute from our known procedure data
+  const procedureEntry = Object.entries(DENTAL_PROCEDURES)
+    .find(([key]) => lower.includes(key));
+
+  let estimate = null;
+  if (procedureEntry) {
+    const [, procedure] = procedureEntry;
+    if (procedure.category !== 'cosmetic') {
+      const netBool = isInNetwork === true || isInNetwork === 'in';
+      estimate = generateCostEstimate(procedure, netBool, coverage ?? {});
     }
   }
-  return result;
+
+  return { suggestedReplies, providerTrigger, estimate };
 }
 
 // ── Network detector (used by the UI) ─────────────────────
@@ -567,12 +537,17 @@ export async function sendChatMessage({ message, conversationHistory, coverage, 
   // Calls /api/ollama/v1/chat/completions, which Vite proxies to
   // http://localhost:11434/v1/chat/completions (Ollama's OpenAI-compatible API).
   // No API key required — Ollama runs locally.
+  //
+  // We do NOT use tool_calls here because phi3 (and most small local models)
+  // don't reliably emit structured tool call JSON. Instead, the LLM generates
+  // the conversational text and deriveMetadata() extracts structured side-panel
+  // data from the user's message using our own keyword logic.
   const systemPrompt = buildSystemPrompt(coverage, isInNetwork);
 
   const messages = [
     { role: 'system', content: systemPrompt },
-    // Include the last 10 turns to stay within local model context limits
-    ...conversationHistory.slice(-10),
+    // Include the last 8 turns to stay within phi3's 4k context window
+    ...conversationHistory.slice(-8),
     { role: 'user', content: message },
   ];
 
@@ -583,54 +558,57 @@ export async function sendChatMessage({ message, conversationHistory, coverage, 
       {
         model: MODEL,
         messages,
-        tools: OLLAMA_TOOLS,
-        tool_choice: 'auto',
-        stream: false,        // must be false for tool calling with Ollama
-        temperature: 0.4,     // low temp = consistent, factual coverage answers
-        // phi3 context window is 4k tokens; keep response concise
+        stream: false,
+        temperature: 0.3,
         options: {
-          num_predict: 512,
+          num_predict: 400,   // keep responses concise for local model speed
+          num_ctx: 3072,      // stay within phi3's context window
         },
       },
       {
         headers: { 'Content-Type': 'application/json' },
-        timeout: 60_000,      // local models can be slow on first token
+        timeout: 120_000,     // local models can take time on first response
       }
     );
     responseData = data;
   } catch (err) {
-    const detail = err.response?.data?.error ?? err.message;
+    // Normalize the error — Ollama can return objects, strings, or nothing
     if (err.code === 'ECONNREFUSED' || err.response?.status === 502) {
       throw new Error(
-        'Cannot reach Ollama. Make sure it is running: open a terminal and run `ollama serve`.'
+        'Cannot reach Ollama. Make sure it is running on port 11434.'
       );
     }
-    throw new Error(detail ?? 'Failed to reach the AI service. Please try again.');
+    if (err.code === 'ECONNABORTED' || err.code === 'ETIMEDOUT') {
+      throw new Error(
+        'The model took too long to respond. Try a shorter question or restart Ollama.'
+      );
+    }
+    // Extract a clean string from whatever Ollama returned
+    const raw = err.response?.data?.error;
+    const detail = typeof raw === 'string'
+      ? raw
+      : raw?.message ?? err.message ?? 'Failed to reach the AI service.';
+    throw new Error(detail);
   }
 
   const choice = responseData.choices?.[0];
   if (!choice) throw new Error('No response from Ollama. Please try again.');
 
-  const assistantMessage = choice.message;
-  const text = assistantMessage.content?.trim() ?? '';
+  const text = choice.message?.content?.trim() ?? '';
+  if (!text) throw new Error('Ollama returned an empty response. Please try again.');
 
-  // Extract structured metadata from tool calls
-  const { estimate, providerTrigger, suggestedReplies } = parseToolCalls(
-    assistantMessage.tool_calls
+  // Derive side-panel metadata from the user's message (not tool calls)
+  const { estimate, providerTrigger, suggestedReplies } = deriveMetadata(
+    message,
+    isInNetwork,
+    coverage
   );
 
-  const fallbackSuggestions = suggestedReplies.length > 0 ? suggestedReplies : [
-    'What does my plan cover?',
-    'Show available providers',
-    'How much is a cleaning?',
-    'What is my deductible?',
-  ];
-
   return {
-    text: text || 'I encountered an issue generating a response. Please try again.',
-    suggestedReplies: fallbackSuggestions,
-    estimate:        estimate ?? null,
-    providerTrigger: providerTrigger,
+    text,
+    suggestedReplies,
+    estimate,
+    providerTrigger,
   };
 }
 

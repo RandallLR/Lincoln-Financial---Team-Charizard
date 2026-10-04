@@ -513,12 +513,17 @@ export default function AIChatPage() {
         }
       } catch (err) {
         const errNow = new Date();
+        // err.message is always a string when thrown from aiChatApi.js
+        // but guard against anything unexpected
+        const errText = typeof err?.message === 'string' && err.message
+          ? err.message
+          : 'An unexpected error occurred. Please try again.';
         setMessages((prev) => [
           ...prev,
           {
             id: `err-${Date.now()}`,
             role: 'error',
-            content: `Sorry, I ran into an issue: ${err.message ?? 'Please try again.'}`,
+            content: `Sorry, I ran into an issue: ${errText}`,
             timestamp: errNow.toISOString(),
             displayTime: formatTime(errNow),
           },
