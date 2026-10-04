@@ -32,13 +32,8 @@ const QUICK_LINKS = [
   {
     icon: null,
     label: 'Add Qualifying Life Event',
-<<<<<<< HEAD
     desc:  'Report a QLE to update your coverage outside open enrollment.',
-    to:    '/benefits/dental/qle',
-=======
-    desc: 'Report a QLE to update your coverage outside open enrollment.',
-    to: '/life-event',
->>>>>>> 2942c90841d1c276d1e02e4be120cafbb33a4158
+    to:    '/life-event',
   },
   {
     icon: null,
@@ -140,11 +135,7 @@ export default function DentalAssistancePage() {
 
           <div className={styles.expiryAlert} role="status">
             <div className={styles.expiryLeft}>
-<<<<<<< HEAD
               <span className={styles.expiryIcon} aria-hidden="true">⏳</span>
-=======
-              <span className={styles.expiryIcon} aria-hidden="true"></span>
->>>>>>> 2942c90841d1c276d1e02e4be120cafbb33a4158
               <div>
                 <p className={styles.expiryTitle}>Benefits expiring soon</p>
                 <p className={styles.expiryBody}>
