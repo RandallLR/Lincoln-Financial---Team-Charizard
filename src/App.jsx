@@ -14,6 +14,7 @@ import DashboardPage from './pages/DashboardPage';
 import BenefitsPage from './pages/BenefitsPage';
 import DentalAssistancePage from './pages/DentalAssistancePage';
 import ProfilePage from './pages/ProfilePage';
+import LifeEventPage from './pages/LifeEventPage';
 
 /**
  * Route map:
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/benefits" element={<BenefitsPage />} />
         <Route path="/benefits/dental" element={<DentalAssistancePage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/life-event" element={<LifeEventPage />} />
       </Route>
 
       {/* Fallback */}
