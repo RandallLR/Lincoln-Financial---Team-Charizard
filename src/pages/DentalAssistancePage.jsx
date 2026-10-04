@@ -60,7 +60,7 @@ export default function DentalAssistancePage() {
 
       {/* ── Page header ─────────────────────────────────── */}
       <header className={styles.pageHeader}>
-        <h1 className={styles.heading}>Dental Assistance</h1>
+        <h1 className={styles.heading}>Your Dental Plan Coverage Overview</h1>
         <p className={styles.subheading}>
           {s.planName} — manage claims, coverage, and find in-network providers.
         </p>
