@@ -181,6 +181,18 @@
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
 }
+
+/* AI Assistant entry — visually elevated */
+.quickItemHighlight {
+  border-color: var(--color-primary);
+  background: var(--color-primary-faint);
+}
+
+.quickItemHighlight:hover {
+  border-color: var(--color-primary-dark);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
 .quickIcon {
   font-size: 1.4rem;
   flex-shrink: 0;

@@ -19,7 +19,14 @@ const PLAN_SNAPSHOT = {
 
 const QUICK_LINKS = [
   {
-    icon: null,
+    icon: '🤖',
+    label: 'AI Coverage Assistant',
+    desc: 'Chat with DentalBot to estimate costs, understand coverage, and find providers.',
+    to: '/benefits/dental/ai-chat',
+    highlight: true,
+  },
+  {
+    icon: '📋',
     label: 'View / Compare Plans',
     desc: 'Browse and compare available dental plan options.',
     to: '/benefits/dental/compare-plans',
@@ -153,10 +160,11 @@ export default function DentalAssistancePage() {
           <ul className={styles.quickList} role="list">
             {QUICK_LINKS.map((ql) => (
               <li key={ql.to}>
-                <Link to={ql.to} className={styles.quickItem}>
-                  {ql.icon && (
-                    <span className={styles.quickIcon} aria-hidden="true">{ql.icon}</span>
-                  )}
+                <Link
+                  to={ql.to}
+                  className={`${styles.quickItem} ${ql.highlight ? styles.quickItemHighlight : ''}`}
+                >
+                  <span className={styles.quickIcon} aria-hidden="true">{ql.icon}</span>
                   <div className={styles.quickText}>
                     <span className={styles.quickLabel}>{ql.label}</span>
                     <span className={styles.quickDesc}>{ql.desc}</span>
