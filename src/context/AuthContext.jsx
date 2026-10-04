@@ -127,17 +127,19 @@ export function AuthProvider({ children }) {
  * Mock authentication — replace with a real fetch() / axios call.
  * Simulates ~400 ms network latency.
  *
- * @param {string} employeeId
+ * @param {string} email
  * @param {string} password
  * @returns {Promise<Employee>}
  */
-async function authenticate(employeeId, password) {
+async function authenticate(email, password) {
   await new Promise((res) => setTimeout(res, 400));
 
-  const employee = MOCK_EMPLOYEES[employeeId?.toUpperCase()];
+  const employee = Object.values(MOCK_EMPLOYEES).find(
+    (e) => e.email.toLowerCase() === email?.toLowerCase()
+  );
 
   if (!employee || employee.password !== password) {
-    throw new Error('Invalid Employee ID or password. Please try again.');
+    throw new Error('Invalid email or password. Please try again.');
   }
 
   return employee;

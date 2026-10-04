@@ -14,7 +14,7 @@ export default function LoginPage() {
   const location = useLocation();
   const from = location.state?.from?.pathname ?? '/dashboard';
 
-  const [form, setForm]       = useState({ employeeId: '', password: '' });
+  const [form, setForm]       = useState({ email: '', password: '' });
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -25,13 +25,13 @@ export default function LoginPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!form.employeeId || !form.password) {
-      setError('Employee ID and password are required.');
+    if (!form.email || !form.password) {
+      setError('Email and password are required.');
       return;
     }
     setLoading(true);
     try {
-      await login(form.employeeId, form.password);
+      await login(form.email, form.password);
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
@@ -62,18 +62,18 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} noValidate>
           <div className={styles.field}>
-            <label htmlFor="employeeId" className={styles.label}>
-              Employee ID
+            <label htmlFor="email" className={styles.label}>
+              Work email
             </label>
             <input
-              id="employeeId"
-              name="employeeId"
-              type="text"
-              autoComplete="username"
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
               className={styles.input}
-              value={form.employeeId}
+              value={form.email}
               onChange={handleChange}
-              placeholder="e.g. LFG-12345"
+              placeholder="you@lincolnfinancial.com"
               aria-required="true"
             />
           </div>
