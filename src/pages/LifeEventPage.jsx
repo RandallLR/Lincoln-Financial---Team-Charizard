@@ -605,7 +605,6 @@ export default function LifeEventPage() {
                   {/* Documents note */}
                   <div className={styles.docNote} role="note">
                     <span>
-                    <span>
                       Supporting documents (e.g. marriage certificate, birth certificate) may be
                       required depending on your plan.
                     </span>
