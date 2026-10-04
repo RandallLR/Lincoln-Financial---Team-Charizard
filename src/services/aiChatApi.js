@@ -46,8 +46,16 @@ export const DENTAL_PROCEDURES = {
     category: 'preventive',
     typicalCost: { low: 75, high: 200 },
     description:
-      'A professional cleaning that removes plaque and tartar buildup. ' +
-      'Includes scaling, polishing, and a fluoride treatment.',
+      'A professional cleaning that removes plaque and tartar buildup from your teeth and gumline. ' +
+      'Includes scaling, polishing, and a fluoride treatment to strengthen enamel.',
+    symptoms: [
+      'Visible yellow or brown buildup on teeth',
+      'Gums that bleed when brushing or flossing',
+      'Persistent bad breath even after brushing',
+      'Teeth that feel rough or "fuzzy"',
+      'It\'s been more than 6 months since your last cleaning',
+    ],
+    specialistNote: 'A general dentist performs cleanings. If your hygienist notices heavy tartar or early gum disease, they may refer you to a periodontist (gum specialist).',
     inNetworkCoverage: 100,
     outNetworkCoverage: 80,
     frequency: 'Typically covered twice per year (every 6 months).',
@@ -58,8 +66,16 @@ export const DENTAL_PROCEDURES = {
     category: 'preventive',
     typicalCost: { low: 50, high: 150 },
     description:
-      'A full evaluation of your teeth, gums, and oral tissue. ' +
+      'A full evaluation of your teeth, gums, jaw, and soft tissue. ' +
       'Usually includes X-rays and an oral cancer screening.',
+    symptoms: [
+      'You haven\'t had a dental checkup in over a year',
+      'Tooth pain or sensitivity that comes and goes',
+      'Sore spots, lumps, or patches inside your mouth',
+      'Jaw pain or clicking when you chew',
+      'A tooth that looks discolored or feels loose',
+    ],
+    specialistNote: 'Your general dentist handles routine exams. If they spot something concerning — like a suspicious lesion or bite problem — they\'ll refer you to an oral surgeon or specialist.',
     inNetworkCoverage: 100,
     outNetworkCoverage: 80,
     frequency: 'Covered once per year.',
@@ -71,7 +87,15 @@ export const DENTAL_PROCEDURES = {
     typicalCost: { low: 25, high: 150 },
     description:
       'Bitewing X-rays detect cavities between teeth and below the gumline ' +
-      'that are not visible during a standard exam.',
+      'that are not visible to the naked eye during a standard exam.',
+    symptoms: [
+      'Tooth pain when biting down or chewing',
+      'Sensitivity to hot or cold that lingers',
+      'Your dentist wants to check for hidden cavities',
+      'You haven\'t had X-rays in over a year',
+      'A tooth looks darker or feels hollow',
+    ],
+    specialistNote: 'X-rays are taken by your general dentist or hygienist. Results that show deep decay, bone loss, or abnormalities may prompt a referral to an endodontist or oral surgeon.',
     inNetworkCoverage: 100,
     outNetworkCoverage: 80,
     frequency: 'Typically covered once per year.',
@@ -82,7 +106,16 @@ export const DENTAL_PROCEDURES = {
     category: 'basic_restorative',
     typicalCost: { low: 90, high: 300 },
     description:
-      'A tooth-colored resin filling that repairs a cavity or minor chip.',
+      'A tooth-colored resin material used to repair a cavity, crack, or minor chip. ' +
+      'It bonds directly to the tooth and blends in naturally.',
+    symptoms: [
+      'Sharp pain when eating sweet, hot, or cold foods',
+      'Visible dark spot or hole on a tooth',
+      'A tooth feels rough or chipped when you run your tongue over it',
+      'Your dentist found a cavity on your X-ray',
+      'Food keeps getting stuck in the same spot',
+    ],
+    specialistNote: 'Fillings are done by your general dentist. If the decay has reached the nerve, they may recommend a root canal instead — and refer you to an endodontist for that part.',
     inNetworkCoverage: 80,
     outNetworkCoverage: 60,
     frequency: 'As needed.',
@@ -93,7 +126,15 @@ export const DENTAL_PROCEDURES = {
     category: 'basic_restorative',
     typicalCost: { low: 75, high: 300 },
     description:
-      'Removal of a tooth that is damaged, decayed, or crowded.',
+      'The removal of a tooth that is too damaged, decayed, or crowded to save.',
+    symptoms: [
+      'Severe tooth pain that doesn\'t go away',
+      'A tooth that is visibly cracked or broken near the gumline',
+      'Significant decay with no viable restoration options',
+      'Crowding that is affecting neighboring teeth',
+      'A tooth that is infected and causing facial swelling',
+    ],
+    specialistNote: 'Simple extractions are done by a general dentist. For impacted teeth (like wisdom teeth) or more complex cases, you\'ll be referred to an oral surgeon.',
     inNetworkCoverage: 80,
     outNetworkCoverage: 60,
     frequency: 'As needed.',
@@ -104,7 +145,17 @@ export const DENTAL_PROCEDURES = {
     category: 'major_restorative',
     typicalCost: { low: 700, high: 1500 },
     description:
-      'Removes infected pulp from inside a tooth, cleans the canal, and seals it.',
+      'A procedure that removes infected or inflamed pulp from inside a tooth, ' +
+      'cleans and shapes the canals, then seals the tooth to prevent reinfection.',
+    symptoms: [
+      'Severe, throbbing toothache — especially when lying down',
+      'Prolonged sensitivity to heat or cold (pain that lingers after the stimulus is gone)',
+      'Darkening or discoloration of a single tooth',
+      'Swelling or a pimple-like bump on your gum near a tooth',
+      'Pain when chewing or pressing on a specific tooth',
+      'A tooth that was previously injured and is now causing pain',
+    ],
+    specialistNote: 'Root canals are performed by an endodontist (root canal specialist) or sometimes a general dentist. After the procedure, a crown is usually needed to protect the tooth — that\'s a separate appointment and cost.',
     inNetworkCoverage: 50,
     outNetworkCoverage: 30,
     frequency: 'As needed.',
@@ -115,7 +166,16 @@ export const DENTAL_PROCEDURES = {
     category: 'major_restorative',
     typicalCost: { low: 1000, high: 1800 },
     description:
-      'A custom-fitted cap that covers a damaged or weakened tooth.',
+      'A custom-fitted cap permanently cemented over a damaged or weakened tooth ' +
+      'to restore its shape, strength, and appearance.',
+    symptoms: [
+      'A large filling that is cracked or failing',
+      'A tooth that broke or cracked — especially one you can feel with your tongue',
+      'A tooth that just had a root canal (crowns are almost always needed after)',
+      'Significant decay that a filling can\'t fully fix',
+      'A tooth that is worn down from grinding',
+    ],
+    specialistNote: 'Crowns are placed by a general dentist or prosthodontist. Most require pre-authorization from your insurance — your dentist\'s office will usually handle submitting that request.',
     inNetworkCoverage: 50,
     outNetworkCoverage: 30,
     frequency: 'Typically covered once per tooth per 5 years.',
@@ -126,10 +186,19 @@ export const DENTAL_PROCEDURES = {
     category: 'major_restorative',
     typicalCost: { low: 3000, high: 5000 },
     description:
-      'A titanium post surgically placed in the jawbone as an artificial tooth root.',
+      'A titanium post surgically placed in the jawbone that acts as an artificial tooth root, ' +
+      'topped with a crown to replace a single missing tooth.',
+    symptoms: [
+      'A tooth that was extracted or fell out and has not been replaced',
+      'A gap that is making it difficult to chew or speak',
+      'Neighboring teeth are starting to shift or lean into the gap',
+      'Bone loss in the jaw from a long-standing missing tooth',
+      'You\'ve been told a bridge isn\'t a good option for your situation',
+    ],
+    specialistNote: 'Implants require an oral surgeon or periodontist for the surgical placement, and a general dentist or prosthodontist for the crown on top. Pre-authorization is required — the full process typically takes 3–6 months.',
     inNetworkCoverage: 50,
     outNetworkCoverage: 30,
-    frequency: 'As needed. May require pre-authorization.',
+    frequency: 'As needed. Requires pre-authorization.',
   },
   'bridge': {
     label: 'Dental Bridge',
@@ -137,7 +206,16 @@ export const DENTAL_PROCEDURES = {
     category: 'major_restorative',
     typicalCost: { low: 2500, high: 5000 },
     description:
-      'A fixed prosthetic that replaces one or more missing teeth.',
+      'A fixed replacement for one or more missing teeth. It anchors to the teeth on ' +
+      'either side of the gap with crowns, with an artificial tooth (pontic) spanning the space.',
+    symptoms: [
+      'One or more missing teeth with healthy teeth on either side',
+      'Difficulty chewing on one side of your mouth',
+      'Remaining teeth are starting to shift or tilt toward the gap',
+      'Your dentist has confirmed the adjacent teeth are strong enough to support a bridge',
+      'You prefer a fixed option over a removable partial denture',
+    ],
+    specialistNote: 'Bridges are placed by a general dentist or prosthodontist. Pre-authorization is often required. The adjacent teeth must be prepared (slightly reshaped) to anchor the bridge.',
     inNetworkCoverage: 50,
     outNetworkCoverage: 30,
     frequency: 'Typically covered once per span per 5 years.',
@@ -148,7 +226,15 @@ export const DENTAL_PROCEDURES = {
     category: 'major_restorative',
     typicalCost: { low: 1500, high: 4000 },
     description:
-      'A removable full arch of prosthetic teeth, replacing all upper or lower teeth.',
+      'A removable full set of prosthetic teeth that replaces all teeth in the upper ' +
+      'or lower jaw after they have been lost or extracted.',
+    symptoms: [
+      'Most or all teeth in one arch are missing or need to be removed',
+      'Significant difficulty chewing or speaking due to tooth loss',
+      'Existing dentures that no longer fit properly (causing sore spots or slipping)',
+      'Gum and jaw changes that make current dentures uncomfortable',
+    ],
+    specialistNote: 'Dentures are made and fitted by a general dentist or prosthodontist. If teeth still need to be removed first, there\'s usually a healing period before the final denture is made.',
     inNetworkCoverage: 50,
     outNetworkCoverage: 30,
     frequency: 'Typically covered once per arch per 5 years.',
@@ -159,7 +245,16 @@ export const DENTAL_PROCEDURES = {
     category: 'orthodontia',
     typicalCost: { low: 3500, high: 7000 },
     description:
-      'Brackets, wires, or clear aligners that gradually move teeth into alignment.',
+      'Brackets, wires, or clear aligners that apply gradual pressure to move ' +
+      'teeth into better alignment over 12–24 months.',
+    symptoms: [
+      'Teeth that are visibly crooked, crowded, or widely spaced',
+      'An overbite, underbite, or crossbite (your dentist can confirm)',
+      'Difficulty biting or chewing properly',
+      'Jaw pain or headaches related to how your teeth meet',
+      'Self-consciousness about the appearance of your smile',
+    ],
+    specialistNote: 'Orthodontic treatment is provided by an orthodontist. Your general dentist can refer you after a routine exam. Note: your plan has a **$1,500 lifetime maximum** for orthodontia — not a per-year limit.',
     inNetworkCoverage: 50,
     outNetworkCoverage: 30,
     frequency: 'Lifetime maximum of $1,500 applies.',
@@ -170,7 +265,17 @@ export const DENTAL_PROCEDURES = {
     category: 'basic_restorative',
     typicalCost: { low: 200, high: 600 },
     description:
-      'A non-surgical treatment for gum disease that removes tartar from below the gumline.',
+      'A non-surgical treatment for gum disease that removes hardened tartar ' +
+      'from below the gumline and smooths the root surfaces to help gums reattach.',
+    symptoms: [
+      'Gums that bleed regularly when brushing or flossing',
+      'Gums that look red, swollen, or are pulling away from your teeth',
+      'Persistent bad breath that doesn\'t go away with brushing',
+      'Teeth that feel loose or like they\'ve shifted',
+      'Your dentist measured deep pockets (4mm or more) around your teeth',
+      'You were diagnosed with gingivitis or early periodontitis',
+    ],
+    specialistNote: 'Deep cleanings are performed by a periodontist (gum specialist) or a hygienist under a dentist\'s supervision. If gum disease is advanced, the periodontist may recommend additional treatments after the deep cleaning.',
     inNetworkCoverage: 80,
     outNetworkCoverage: 60,
     frequency: 'As needed; usually per quadrant.',
@@ -181,7 +286,13 @@ export const DENTAL_PROCEDURES = {
     category: 'cosmetic',
     typicalCost: { low: 300, high: 1000 },
     description:
-      'A cosmetic procedure that lightens tooth enamel using bleaching agents.',
+      'A cosmetic procedure that uses bleaching agents to lighten tooth enamel. ' +
+      'Available as an in-office treatment or take-home trays from your dentist.',
+    symptoms: [
+      'Teeth that appear yellowed or stained from coffee, tea, or smoking',
+      'General dissatisfaction with the brightness of your smile',
+    ],
+    specialistNote: 'Whitening is offered by general dentists and some cosmetic dentists. Since it\'s cosmetic, it\'s not covered by your plan — but over-the-counter options are available at a lower cost.',
     inNetworkCoverage: 0,
     outNetworkCoverage: 0,
     frequency: 'Not covered — cosmetic procedures are excluded from most dental plans.',
@@ -190,23 +301,23 @@ export const DENTAL_PROCEDURES = {
 
 // ── Dental jargon glossary ─────────────────────────────────
 const DENTAL_GLOSSARY = {
-  'deductible': 'The amount you pay out-of-pocket each plan year before your insurance starts covering costs. Your plan has a $50 individual deductible.',
-  'copay': 'A fixed amount you pay for a covered service. Copays typically apply after your deductible is met.',
-  'coinsurance': 'The percentage of a covered service cost you pay after meeting your deductible. If your plan covers 80%, you pay the remaining 20%.',
-  'annual maximum': "The maximum dollar amount your insurance will pay for dental services in a plan year. Your plan's annual maximum is $2,000.",
-  'in-network': 'Providers who have a contract with your insurance company. In-network providers offer discounted rates, lowering your out-of-pocket costs.',
-  'out-of-network': "Providers without a contract with your insurer. You may still use them, but you'll pay more — typically 20–40% more than in-network rates.",
-  'pre-authorization': 'Approval required from your insurer before certain procedures (e.g., crowns, implants) to confirm coverage.',
-  'cdt code': 'Current Dental Terminology codes — standardized 5-digit codes starting with "D" used to identify dental procedures on claims.',
-  'prophylaxis': 'The clinical term for a professional dental cleaning. Covered 100% in-network, twice per year.',
-  'periodontitis': 'A serious gum infection that damages soft tissue and can destroy the bone supporting your teeth.',
-  'endodontic': 'Relating to the inner tooth (pulp and root canal). "Endodontic treatment" is the clinical term for a root canal.',
-  'pontic': 'The artificial tooth in a dental bridge that fills the gap left by a missing tooth.',
-  'abutment': 'A tooth or implant that anchors a bridge or crown.',
-  'occlusion': 'How your upper and lower teeth fit together when you bite. "Malocclusion" means a misaligned bite.',
-  'fluoride': 'A mineral that strengthens tooth enamel and helps prevent cavities. Applied during cleanings. Covered preventively.',
-  'amalgam': 'A silver-colored filling material made of mercury alloy. Durable and less expensive than composite.',
-  'composite': 'A tooth-colored resin filling material that blends naturally with teeth.',
+  'deductible': 'Think of your deductible as your share you pay first before insurance kicks in. Your plan has a **$50 individual deductible** — a pretty low bar. Once you hit $50 in dental bills, your insurance starts picking up its share for the rest of the year.',
+  'copay': 'A copay is just a flat fee you pay at the visit — like a cover charge. For example, you might pay $20 at the door and insurance covers the rest. Copays usually apply after your deductible is met.',
+  'coinsurance': "Coinsurance is how you and your insurance split the bill — like splitting a check. If your plan covers 80%, insurance pays $80 of a $100 procedure and you pay the remaining **$20**. For a bigger procedure like a $1,000 crown, you'd pay about **$500** (50% is your share for major work).",
+  'annual maximum': "This is the most your insurance will pay out in one plan year. Your plan's cap is **$2,000**. Think of it like a gift card — once insurance has paid out $2,000 for the year, any extra costs are on you until the plan resets January 1st.",
+  'in-network': 'In-network just means the dentist has a deal with your insurance company to charge lower rates. That lower starting price means you pay less even before insurance applies. **Bottom line: in-network dentists are almost always the cheaper choice.**',
+  'out-of-network': "Out-of-network dentists don't have a pricing agreement with your insurer, so their starting rate is higher. Your plan still helps cover some of the cost, but you'll pay more — often **$100–$200 extra** compared to seeing an in-network dentist for the same procedure.",
+  'pre-authorization': "Pre-authorization is basically asking your insurance for a green light before a big procedure. Your dentist sends over the details and your insurer confirms they'll cover it — and for how much. It's required for things like crowns and implants. It's not as complicated as it sounds; your dentist's office usually handles the paperwork.",
+  'cdt code': 'CDT codes are just billing shorthand — every dental procedure has its own 5-digit code starting with "D." For example, a routine cleaning is D1110. Your dentist uses these codes so your insurance knows exactly what was done. You don\'t need to memorize them — they show up on your Explanation of Benefits (EOB) if you\'re ever reviewing a claim.',
+  'prophylaxis': 'Prophylaxis is just the official word for a routine teeth cleaning. The good news: your plan covers cleanings **100% in-network**, twice a year — meaning a **$0 bill for you**. Just show your insurance card and you\'re covered.',
+  'periodontitis': "Periodontitis is a serious gum infection — basically when gum disease has gotten bad enough to start damaging the bone that holds your teeth in place. It's treated with a deep cleaning (called scaling and root planing), which your plan partially covers. Catching it early makes a big difference.",
+  'endodontic': 'Endodontic is just a fancy word for root canal work. A root canal removes the infected pulp inside a tooth to stop pain and save the tooth. Your plan covers root canals at **80% in-network** — so on a typical $900 procedure, you\'d pay roughly **$180**.',
+  'pontic': "A pontic is the fake tooth in the middle of a dental bridge — the one that fills the gap where a real tooth is missing. It's held in place by crowns on either side. You won't see this word much outside of a bill, but it's useful when reviewing what your insurance covered.",
+  'abutment': "An abutment is the support piece that connects an implant to the crown on top. If you're getting an implant, think of it as the connector between the screw in your jaw and the visible tooth.",
+  'occlusion': 'Occlusion just means how your teeth line up when you bite down. If your dentist mentions "bad occlusion," they mean your teeth don\'t fit together quite right — which can cause wear, jaw pain, or headaches over time.',
+  'fluoride': "Fluoride is a mineral that hardens your tooth enamel and helps prevent cavities. It's applied as a quick treatment at the end of your cleaning. Your plan covers it **100% preventively** — so there's no reason to skip it.",
+  'amalgam': 'Amalgam is the classic silver filling material — strong, long-lasting, and less expensive. Typically costs **$75–$150** per tooth out of pocket (after insurance). Most people choose this for back teeth where looks matter less.',
+  'composite': 'Composite is the tooth-colored filling that blends in with your natural teeth. It costs a bit more than silver (typically **$100–$200** per tooth after insurance), but most people prefer it because you can\'t see it.',
 };
 
 // ── Build the system prompt injected into every OpenAI call ─
@@ -255,12 +366,14 @@ AVAILABLE PROCEDURE COST DATA (use these for estimates):
 ${proceduresSummary}
 
 RESPONSE FORMAT RULES:
-- Use markdown: **bold** for key terms and amounts, bullet points (•) for lists.
-- Keep responses concise and clear. Avoid unnecessary filler.
-- Always include a cost estimate when a procedure is mentioned, using the plan data above.
-- For cost estimates: apply the correct coverage percentage based on the procedure category and network selection. Subtract any remaining deductible first.
-- End every response that involves a procedure with a note that these are estimates and actual costs vary by provider.
+- Use markdown: **bold** for key terms and dollar amounts, bullet points (•) for lists.
+- Write in plain, friendly language — like a knowledgeable coworker explaining a bill, not a policy document.
+- Avoid insurance jargon without immediately explaining it in simple terms.
+- Always include a concrete dollar-amount example so the employee knows exactly what to expect. Never give only a percentage — always follow it with a dollar example.
+- After every cost breakdown, add a plain-English "Bottom line:" sentence summarizing what the employee will actually pay.
+- End every response that involves a procedure cost with: "These are estimates — your actual bill may vary slightly by provider."
 - When discussing providers, indicate they are available in the providers panel on screen.
+- When a procedure is mentioned, always include: (1) what the procedure actually does in plain English, (2) common symptoms that suggest someone might need it so the employee can evaluate whether to mention them to a dentist, and (3) which type of specialist performs it and when a referral is typical.
 
 DENTAL GLOSSARY (use these definitions when explaining terms):
 ${Object.entries(DENTAL_GLOSSARY).map(([k, v]) => `- ${k}: ${v}`).join('\n')}`;
@@ -427,13 +540,15 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
     const hasProcedure = Object.keys(DENTAL_PROCEDURES).some((key) => lower.includes(key));
     if (!hasProcedure) {
       return {
-        text: `Your plan covers both **in-network** and **out-of-network** providers:\n\n` +
+        text: `Your plan covers both **in-network** and **out-of-network** dentists — here's the quick breakdown:\n\n` +
           `| Service Type | In-Network | Out-of-Network |\n` +
           `|---|---|---|\n` +
-          `| Preventive | 100% | 80% |\n` +
-          `| Basic Restorative | 80% | 60% |\n` +
-          `| Major Restorative | 50% | 30% |\n\n` +
-          `In-network providers have pre-negotiated rates, lowering your total bill before your percentage applies.`,
+          `| Preventive (cleanings, exams) | 100% | 80% |\n` +
+          `| Basic (fillings, extractions) | 80% | 60% |\n` +
+          `| Major (crowns, implants) | 50% | 30% |\n\n` +
+          `**Why does in-network cost less?** In-network dentists agree to charge lower rates upfront. So your percentage applies to a smaller starting price — which means a smaller bill for you.\n\n` +
+          `📌 **Example:** A crown typically runs about **$1,100**. In-network, your plan covers 50% — you'd pay roughly **$550**. Out-of-network with only 30% coverage, you'd pay closer to **$770** for the exact same procedure.\n\n` +
+          `**Bottom line: going in-network for a crown saves you about $220 on average.**`,
         suggestedReplies: ['Show in-network providers', 'How much is a crown in-network?', 'Find a dentist', 'What is my annual maximum?'],
         providerTrigger: true,
       };
@@ -445,9 +560,16 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
     .find(([key]) => lower.includes(key))?.[1] ?? null;
 
   if (procedure) {
+    const symptomsList = procedure.symptoms
+      ? procedure.symptoms.map((s) => `  • ${s}`).join('\n')
+      : null;
+
     if (procedure.category === 'cosmetic') {
       return {
-        text: `**${procedure.label}** is classified as a **cosmetic procedure** and is **not covered** under your dental plan.\n\nTypical out-of-pocket cost: **$${procedure.typicalCost.low}–$${procedure.typicalCost.high}**`,
+        text: `**${procedure.label}** is a **cosmetic procedure** and is **not covered** under your dental plan — you'd pay the full cost out of pocket.\n\n` +
+          `**What it is:** ${procedure.description}\n\n` +
+          `**Typical out-of-pocket cost:** $${procedure.typicalCost.low}–$${procedure.typicalCost.high}\n\n` +
+          (procedure.specialistNote ? `**Who to see:** ${procedure.specialistNote}` : ''),
         suggestedReplies: ['What procedures are covered?', 'How much is a cleaning?', 'What is my annual maximum?'],
       };
     }
@@ -458,24 +580,40 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
 
     if (network === null) {
       return {
-        text: `I can estimate the cost of a **${procedure.label}** for you.\n\nFirst — would you be seeing an **in-network** or **out-of-network** provider?`,
+        text: `**${procedure.label}**\n\n` +
+          `**What it is:** ${procedure.description}\n\n` +
+          (symptomsList
+            ? `**Common signs you might need this:**\n${symptomsList}\n\n` +
+              `If any of these sound familiar, it's worth mentioning them at your next appointment.\n\n`
+            : '') +
+          (procedure.specialistNote ? `**Who to see:** ${procedure.specialistNote}\n\n` : '') +
+          `To get an accurate cost estimate, would you be seeing an **in-network** or **out-of-network** provider?`,
         suggestedReplies: ['In-network provider', 'Out-of-network provider', 'Show both'],
         awaitingNetwork: procedure,
       };
     }
+
     const netBool = network === 'in';
     const estimate = generateCostEstimate(procedure, netBool, coverage);
     const networkLabel = netBool ? 'in-network' : 'out-of-network';
     return {
-      text: `Here's your estimated cost for a **${procedure.label}** with an **${networkLabel}** provider:\n\n` +
-        `• **Typical cost:** $${estimate.typicalCostRange.low}–$${estimate.typicalCostRange.high}\n` +
-        `• **Plan covers:** ${estimate.coveragePercent}%\n` +
-        `• **Estimated insurance pays:** ~$${estimate.insurancePays.toLocaleString()}\n` +
-        `• **Your estimated cost:** ~$${estimate.youPay.toLocaleString()}\n\n` +
+      text: `**${procedure.label}**\n\n` +
+        `**What it is:** ${procedure.description}\n\n` +
+        (symptomsList
+          ? `**Common signs you might need this:**\n${symptomsList}\n\n` +
+            `If any of these sound familiar, bring them up at your next appointment — your dentist can confirm whether this procedure is right for you.\n\n`
+          : '') +
+        `---\n\n` +
+        `**Your estimated cost** with an **${networkLabel}** dentist:\n\n` +
+        `• **Typical procedure price:** $${estimate.typicalCostRange.low}–$${estimate.typicalCostRange.high} (average: ~$${estimate.estimatedCost})\n` +
+        `• **Your plan pays:** ${estimate.coveragePercent}% → about **$${estimate.insurancePays.toLocaleString()}**\n` +
+        `• **You pay:** about **$${estimate.youPay.toLocaleString()}**\n\n` +
         `${estimate.deductibleApplied > 0
-          ? `⚠️ Your $${estimate.deductibleApplied} remaining deductible applies first.\n\n`
-          : '✅ Your deductible is fully met — no additional deductible applies.\n\n'}` +
-        `_Estimates are based on your plan's coverage percentages. Actual costs vary by provider._`,
+          ? `⚠️ **Heads up:** You have **$${estimate.deductibleApplied}** left on your deductible. That comes out of your pocket first, then insurance covers its share on top.\n\n`
+          : `✅ **Good news:** Your deductible is already met — insurance kicks in right away.\n\n`}` +
+        `💡 **Bottom line:** Expect to pay around **$${estimate.youPay.toLocaleString()} out of pocket**${estimate.isInNetwork ? ' — in-network keeps your cost as low as possible' : ' — switching to an in-network dentist could save you money'}.\n\n` +
+        (procedure.specialistNote ? `**Who performs this:** ${procedure.specialistNote}\n\n` : '') +
+        `_These are estimates — your actual bill may vary slightly by provider._`,
       suggestedReplies: ['Show available providers', 'What does coinsurance mean?', 'How much is a cleaning?', 'What is pre-authorization?'],
       estimate,
       providerTrigger: true,
@@ -495,17 +633,17 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
     const total = coverage.deductible ?? 50;
     const remaining = Math.max(0, total - met);
     return {
-      text: `Your **individual deductible** is **$${total}** for this plan year.\n\n` +
+      text: `Your **individual deductible** is **$${total}** per year. That's the amount you pay out of pocket before insurance starts sharing costs.\n\n` +
         `${remaining === 0
-          ? '✅ Your deductible is **fully met** — insurance applies immediately.'
-          : `You've met **$${met}** of $${total}. You have **$${remaining} remaining**.`}`,
+          ? `✅ **You've already hit your deductible for the year!** Insurance kicks in right away now — no extra out-of-pocket first. For example, a $200 filling would cost you about **$40** (you pay 20%, insurance covers the other 80%).`
+          : `You've paid **$${met}** toward your deductible so far. You have **$${remaining} left** before insurance starts covering its share.\n\n📌 **Example:** If your next bill is $100, you'd pay all $100 until you've hit the $${remaining} remaining — then insurance takes over for the rest of the year.`}`,
       suggestedReplies: ['What does my plan cover?', 'How much is a filling?', 'What is coinsurance?', 'Show my providers'],
     };
   }
 
   if (lower.includes('annual max') || lower.includes('maximum benefit') || lower.includes('annual limit')) {
     return {
-      text: `Your plan's **annual maximum benefit** is **$${(coverage.annualMaximum ?? 2000).toLocaleString()}** per plan year.\n\n💡 **Tip:** If you're close to your maximum, consider timing non-urgent procedures to the start of the new plan year.`,
+      text: `Your plan's **annual maximum** is **$${(coverage.annualMaximum ?? 2000).toLocaleString()}** per plan year — that's the most insurance will pay out between January 1st and December 31st. After that, you'd be paying out of pocket until the plan resets.\n\n📌 **Example:** If insurance has already covered $1,200 of your dental work this year, you have **$800 left** before hitting your cap.\n\n💡 **Tip:** Got a big procedure coming up, like a crown or implant? Try to schedule it early in the year so you have the full $2,000 available.`,
       suggestedReplies: ['What procedures are covered?', 'Schedule a service', 'Show available providers'],
     };
   }
