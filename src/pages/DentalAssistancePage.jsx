@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import {
   fetchDentalCoverage,
   submitDentalClaim,
@@ -8,83 +7,63 @@ import {
   fetchDentalProviders,
   fetchCarePlan,
 } from '../services/dentalApi';
-=======
->>>>>>> 766a7cf06907da17b594763d6738b32ebc5ad1b0
 import styles from './DentalAssistancePage.module.css';
 
-<<<<<<< HEAD
-const TABS = [
-  { id: 'careplan',   label: 'My Care Plan'       },
-  { id: 'coverage',   label: 'My Coverage'        },
-  { id: 'claim',      label: 'Submit a Claim'     },
-  { id: 'status',     label: 'Claim Status'       },
-  { id: 'providers',  label: 'Find a Provider'    },
-=======
-// ── Mock coverage snapshot shown at page load ─────────────
-// In production pull this from fetchDentalCoverage() on mount.
+// ── Static snapshot for the hero coverage card ────────────
 const PLAN_SNAPSHOT = {
-  planName:              'Lincoln Dental Premier',
-  annualMaximum:         2000,
-  annualUsed:            1600,   // $1,600 of $2,000 used
-  deductible:            50,
-  deductibleMet:         50,     // fully met
-  preventiveTotal:       100,    // 100 % covered — track dollar value
-  preventiveUsed:        0,      // $0 of preventive used this year
-  preventiveDollarMax:   500,    // approx dollar value of preventive benefit
-  expiringAmount:        400,
-  expiringDays:          86,
+  planName:            'Lincoln Dental Premier',
+  annualMaximum:       2000,
+  annualUsed:          1600,
+  deductible:          50,
+  deductibleMet:       50,
+  preventiveUsed:      0,
+  preventiveDollarMax: 500,
+  expiringAmount:      400,
+  expiringDays:        86,
 };
 
 const QUICK_LINKS = [
   {
     icon: '📋',
     label: 'View / Compare Plans',
-    desc: 'Browse and compare available dental plan options.',
-    to: '/benefits/dental/compare-plans',
+    desc:  'Browse and compare available dental plan options.',
+    to:    '/benefits/dental/compare-plans',
   },
   {
     icon: '📝',
     label: 'Add Qualifying Life Event',
-    desc: 'Report a QLE to update your coverage outside open enrollment.',
-    to: '/benefits/dental/qle',
+    desc:  'Report a QLE to update your coverage outside open enrollment.',
+    to:    '/benefits/dental/qle',
   },
   {
     icon: '📅',
     label: 'Schedule a Service',
-    desc: 'Book a cleaning, exam, or specialist appointment.',
-    to: '/benefits/dental/schedule',
+    desc:  'Book a cleaning, exam, or specialist appointment.',
+    to:    '/benefits/dental/schedule',
   },
 ];
 
-<<<<<<< HEAD
 const TABS = [
-  { id: 'coverage',  label: 'My Coverage'    },
-  { id: 'claim',     label: 'Submit a Claim' },
-  { id: 'status',    label: 'Claim Status'   },
-  { id: 'providers', label: 'Find a Provider'},
->>>>>>> 064ee4d811cc29c097bcffe1de7b9ed68429fb29
+  { id: 'careplan',  label: 'My Care Plan'    },
+  { id: 'coverage',  label: 'My Coverage'     },
+  { id: 'claim',     label: 'Submit a Claim'  },
+  { id: 'status',    label: 'Claim Status'    },
+  { id: 'providers', label: 'Find a Provider' },
 ];
 
 export default function DentalAssistancePage() {
-<<<<<<< HEAD
   const [activeTab, setActiveTab] = useState('careplan');
-=======
-  const [activeTab, setActiveTab] = useState('coverage');
-=======
-export default function DentalAssistancePage() {
->>>>>>> 766a7cf06907da17b594763d6738b32ebc5ad1b0
   const s = PLAN_SNAPSHOT;
 
-  const annualUsedPct      = Math.min(100, Math.round((s.annualUsed      / s.annualMaximum)     * 100));
-  const deductiblePct      = Math.min(100, Math.round((s.deductibleMet   / s.deductible)        * 100));
-  const preventiveUsedPct  = Math.min(100, Math.round((s.preventiveUsed  / s.preventiveDollarMax) * 100));
-  const preventiveLeftPct  = 100 - preventiveUsedPct;
->>>>>>> 064ee4d811cc29c097bcffe1de7b9ed68429fb29
+  const annualUsedPct     = Math.min(100, Math.round((s.annualUsed      / s.annualMaximum)      * 100));
+  const deductiblePct     = Math.min(100, Math.round((s.deductibleMet   / s.deductible)         * 100));
+  const preventiveUsedPct = Math.min(100, Math.round((s.preventiveUsed  / s.preventiveDollarMax) * 100));
+  const preventiveLeftPct = 100 - preventiveUsedPct;
 
   return (
     <div className={styles.page}>
 
-      {/* ── Page title ──────────────────────────────────── */}
+      {/* ── Page header ─────────────────────────────────── */}
       <header className={styles.pageHeader}>
         <h1 className={styles.heading}>🦷 Dental Assistance</h1>
         <p className={styles.subheading}>
@@ -92,16 +71,15 @@ export default function DentalAssistancePage() {
         </p>
       </header>
 
-      {/* ── Two-column hero: Coverage Details + Quick Links */}
+      {/* ── Hero grid: coverage snapshot + quick links ─── */}
       <div className={styles.heroGrid}>
 
-        {/* LEFT — Plan Coverage Details */}
+        {/* LEFT — Coverage snapshot */}
         <section className={styles.coverageCard} aria-labelledby="coverage-heading">
           <h2 id="coverage-heading" className={styles.cardHeading}>
-            Your Current Plan Coverage Details:
+            Your Current Plan Coverage Details
           </h2>
 
-          {/* 1. Annual Maximum Used */}
           <div className={styles.barBlock}>
             <div className={styles.barLabelRow}>
               <span className={styles.barLabel}>Annual Maximum Used</span>
@@ -117,12 +95,9 @@ export default function DentalAssistancePage() {
                 style={{ width: `${annualUsedPct}%` }}
               />
             </div>
-            <p className={styles.barCaption}>
-              ${(s.annualMaximum - s.annualUsed).toLocaleString()} remaining this plan year
-            </p>
+            <p className={styles.barCaption}>${(s.annualMaximum - s.annualUsed).toLocaleString()} remaining this plan year</p>
           </div>
 
-          {/* 2. Deductible Met */}
           <div className={styles.barBlock}>
             <div className={styles.barLabelRow}>
               <span className={styles.barLabel}>Deductible Met</span>
@@ -143,7 +118,6 @@ export default function DentalAssistancePage() {
             </p>
           </div>
 
-          {/* 3. Preventive Services Still Available */}
           <div className={styles.barBlock}>
             <div className={styles.barLabelRow}>
               <span className={styles.barLabel}>Preventive Services Still Available</span>
@@ -154,35 +128,26 @@ export default function DentalAssistancePage() {
             <div className={styles.barTrack} role="progressbar"
               aria-valuenow={preventiveLeftPct} aria-valuemin={0} aria-valuemax={100}
               aria-label={`Preventive services: ${preventiveLeftPct}% available`}>
-              <div
-                className={`${styles.barFill} ${styles.barGood}`}
-                style={{ width: `${preventiveLeftPct}%` }}
-              />
+              <div className={`${styles.barFill} ${styles.barGood}`} style={{ width: `${preventiveLeftPct}%` }} />
             </div>
-            <p className={styles.barCaption}>
-              Preventive care covered at 100% in-network — no cost to you
-            </p>
+            <p className={styles.barCaption}>Preventive care covered at 100% in-network — no cost to you</p>
           </div>
 
-          {/* 4. Expiring benefits alert */}
           <div className={styles.expiryAlert} role="status">
             <div className={styles.expiryLeft}>
-              <span className={styles.expiryIcon}>⏳</span>
+              <span className={styles.expiryIcon} aria-hidden="true">⏳</span>
               <div>
                 <p className={styles.expiryTitle}>Benefits expiring soon</p>
                 <p className={styles.expiryBody}>
-                  <strong>${s.expiringAmount}</strong> of benefits expire in{' '}
-                  <strong>{s.expiringDays} days</strong>.
+                  <strong>${s.expiringAmount}</strong> of benefits expire in <strong>{s.expiringDays} days</strong>.
                 </p>
               </div>
             </div>
-            <a href="/benefits/dental/schedule" className={styles.expiryBtn}>
-              Book your cleaning →
-            </a>
+            <a href="/benefits/dental/schedule" className={styles.expiryBtn}>Book your cleaning →</a>
           </div>
         </section>
 
-        {/* RIGHT — Quick Links */}
+        {/* RIGHT — Quick links */}
         <aside className={styles.quickLinksCard} aria-labelledby="quick-links-heading">
           <h2 id="quick-links-heading" className={styles.cardHeading}>Quick Links</h2>
           <ul className={styles.quickList} role="list">
@@ -201,7 +166,6 @@ export default function DentalAssistancePage() {
           </ul>
         </aside>
       </div>
-<<<<<<< HEAD
 
       {/* ── Tabs ────────────────────────────────────────── */}
       <div className={styles.tabBar} role="tablist" aria-label="Dental portal sections">
@@ -228,76 +192,71 @@ export default function DentalAssistancePage() {
         {activeTab === 'status'    && <ClaimStatusPanel />}
         {activeTab === 'providers' && <ProvidersPanel />}
       </div>
+
     </div>
   );
 }
 
-/* ── Care Plan panel ────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   MY CARE PLAN PANEL
+   ══════════════════════════════════════════════════════════ */
 function CarePlanPanel() {
   const [data, setData]       = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError]     = useState('');
 
-  async function handleFetch() {
-    setLoading(true);
-    setError('');
-    try {
-      const result = await fetchCarePlan();
-      setData(result);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+  useEffect(() => {
+    let cancelled = false;
+    fetchCarePlan()
+      .then((result) => { if (!cancelled) setData(result); })
+      .catch((e)     => { if (!cancelled) setError(e.message); })
+      .finally(()    => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
 
-  if (!data) {
+  if (loading) {
     return (
       <section aria-labelledby="tab-careplan" className={styles.cpEmptyState}>
-        <div className={styles.cpEmptyIcon} aria-hidden="true">📋</div>
-        <h2 className={styles.cpEmptyTitle}>Your Recommended Care Plan</h2>
-        <p className={styles.cpEmptyDesc}>
-          See a personalised multi-year treatment schedule based on your coverage and dental
-          history. Procedures are timed across plan years to maximise your annual benefit and
-          minimise out-of-pocket costs.
-        </p>
-        <button
-          className={styles.primaryBtn}
-          onClick={handleFetch}
-          disabled={loading}
-          aria-busy={loading}
-        >
-          {loading ? 'Loading care plan…' : 'View My Care Plan'}
-        </button>
-        {error && <p className={styles.error} role="alert">{error}</p>}
+        <p className={styles.cpLoadingText}>Loading your care plan…</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section aria-labelledby="tab-careplan" className={styles.cpEmptyState}>
+        <p className={styles.error} role="alert">{error}</p>
+      </section>
+    );
+  }
+
+  if (!data || !data.planYears?.length) {
+    return (
+      <section aria-labelledby="tab-careplan" className={styles.cpEmptyState}>
+        <p className={styles.cpNoPlan}>No plan selected. If you'd like one, select one!</p>
       </section>
     );
   }
 
   const { planYears, comparison } = data;
 
-  // Urgency → display config
   const URGENCY_CONFIG = {
-    urgent:   { className: styles.cpUrgent,   icon: '⚠️' },
-    deferred: { className: styles.cpDeferred, icon: '📅' },
-    routine:  { className: styles.cpRoutine,  icon: null  },
+    urgent:   { className: styles.cpUrgent },
+    deferred: { className: styles.cpDeferred },
+    routine:  { className: styles.cpRoutine },
   };
 
   return (
     <section aria-labelledby="tab-careplan">
-      {/* ── Header strip ── */}
       <div className={styles.cpHeader}>
-        <div>
-          <h2 className={styles.cpMainTitle}>Your Recommended Care Plan</h2>
-          <p className={styles.cpSubtitle}>
-            Procedures are scheduled across plan years to stay under your{' '}
-            <strong>${data.employee.annualMaximum.toLocaleString()}</strong> annual benefit
-            maximum and reduce what you pay out-of-pocket.
-          </p>
-        </div>
+        <h2 className={styles.cpMainTitle}>Your Recommended Care Plan</h2>
+        <p className={styles.cpSubtitle}>
+          Procedures are scheduled across plan years to stay under your{' '}
+          <strong>${data.employee.annualMaximum.toLocaleString()}</strong> annual benefit
+          maximum and reduce what you pay out-of-pocket.
+        </p>
       </div>
 
-      {/* ── Legend ── */}
       <div className={styles.cpLegend} role="list" aria-label="Status legend">
         <span className={styles.cpLegendItem} role="listitem">
           <span className={`${styles.cpLegendDot} ${styles.cpLegendDotUrgent}`} aria-hidden="true" />
@@ -313,54 +272,32 @@ function CarePlanPanel() {
         </span>
       </div>
 
-      {/* ── Main grid: plan columns + compare sidebar ── */}
       <div className={styles.cpGrid}>
-
-        {/* Plan year columns */}
         <div className={styles.cpColumns}>
           {planYears.map((year, colIdx) => (
             <div key={year.year} className={styles.cpColumn}>
-              {/* Year badge + heading */}
               <div className={styles.cpYearHeader}>
                 <span className={styles.cpYearBadge} aria-hidden="true">{colIdx + 1}</span>
                 <h3 className={styles.cpYearTitle}>{year.year} plan year</h3>
               </div>
 
-              {/* Procedure cards */}
               <div className={styles.cpProcedures} role="list" aria-label={`${year.year} procedures`}>
                 {year.procedures.map((proc) => {
                   const urgency = URGENCY_CONFIG[proc.urgency] ?? URGENCY_CONFIG.routine;
                   return (
-                    <div
-                      key={proc.id}
-                      role="listitem"
-                      className={`${styles.cpCard} ${urgency.className}`}
-                    >
+                    <div key={proc.id} role="listitem" className={`${styles.cpCard} ${urgency.className}`}>
                       <div className={styles.cpCardTop}>
                         <span className={styles.cpCardMonth}>{proc.month}</span>
                         <div className={styles.cpCardBody}>
                           <p className={styles.cpCardName}>{proc.name}</p>
-                          {proc.urgencyLabel && (
-                            <p className={styles.cpCardStatus}>
-                              {urgency.icon && (
-                                <span className={styles.cpCardStatusIcon} aria-hidden="true">
-                                  {urgency.icon}
-                                </span>
-                              )}
-                              {proc.urgencyLabel}
-                            </p>
-                          )}
-                          {proc.note && (
-                            <p className={styles.cpCardNote}>{proc.note}</p>
-                          )}
+                          {proc.urgencyLabel && <p className={styles.cpCardStatus}>{proc.urgencyLabel}</p>}
+                          {proc.note        && <p className={styles.cpCardNote}>{proc.note}</p>}
                         </div>
                       </div>
                       <div className={styles.cpCardMeta}>
                         <span className={styles.cpCardCategory}>{proc.category}</span>
                         <span className={styles.cpCardCost}>
-                          {proc.patientCost === 0
-                            ? 'No cost to you'
-                            : `You pay ~$${proc.patientCost.toLocaleString()}`}
+                          {proc.patientCost === 0 ? 'No cost to you' : `You pay ~$${proc.patientCost.toLocaleString()}`}
                         </span>
                       </div>
                     </div>
@@ -368,14 +305,10 @@ function CarePlanPanel() {
                 })}
               </div>
 
-              {/* Annual max usage bar */}
               <div className={styles.cpMaxBar}>
                 <div className={styles.cpMaxLabel}>
                   <span>Annual max used</span>
-                  <span>
-                    <strong>${year.annualMaxUsed.toLocaleString()}</strong> of $
-                    {year.annualMaxTotal.toLocaleString()}
-                  </span>
+                  <span><strong>${year.annualMaxUsed.toLocaleString()}</strong> of ${year.annualMaxTotal.toLocaleString()}</span>
                 </div>
                 <div
                   className={styles.cpBarTrack}
@@ -395,27 +328,21 @@ function CarePlanPanel() {
           ))}
         </div>
 
-        {/* Compare sidebar */}
         <aside className={styles.cpSidebar} aria-label="Cost comparison">
           <h3 className={styles.cpSidebarTitle}>Cost Comparison</h3>
-
           <div className={styles.cpSidebarRow}>
             <span className={styles.cpSidebarLabel}>If all done in {planYears[0]?.year}</span>
             <span className={styles.cpSidebarAmount}>${comparison.allInCurrentYear.toLocaleString()}</span>
           </div>
-
           <div className={`${styles.cpSidebarRow} ${styles.cpSidebarRowRecommended}`}>
             <span className={styles.cpSidebarLabel}>Recommended plan</span>
             <span className={`${styles.cpSidebarAmount} ${styles.cpSidebarAmountHighlight}`}>
               ${comparison.recommended.toLocaleString()}
             </span>
           </div>
-
           <div className={styles.cpSavingsChip} role="status" aria-live="polite">
-            <span className={styles.cpSavingsIcon} aria-hidden="true">💰</span>
             You save <strong>${comparison.savings.toLocaleString()}</strong>
           </div>
-
           <a
             href="mailto:dentist@example.com?subject=My%20Lincoln%20Dental%20Care%20Plan"
             className={styles.cpShareLink}
@@ -423,28 +350,23 @@ function CarePlanPanel() {
           >
             Share with my dentist →
           </a>
-
           <div className={styles.cpSidebarDivider} aria-hidden="true" />
-
           <p className={styles.cpSidebarNote}>
-            Costs are estimates based on your current plan coverage. Actual amounts may vary
-            by provider and treatment complexity.
+            Costs are estimates based on your current plan coverage. Actual amounts may vary by provider and treatment complexity.
           </p>
         </aside>
       </div>
 
-      {/* ── Footer disclaimer ── */}
       <p className={styles.cpDisclaimer}>
-        <em>
-          Urgent care is never delayed. Timing suggestions are for elective care only — confirm
-          scheduling with your dentist.
-        </em>
+        <em>Urgent care is never delayed. Timing suggestions are for elective care only — confirm scheduling with your dentist.</em>
       </p>
     </section>
   );
 }
 
-/* ── Coverage panel ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   MY COVERAGE PANEL
+   ══════════════════════════════════════════════════════════ */
 function CoveragePanel() {
   const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(false);
@@ -463,35 +385,124 @@ function CoveragePanel() {
     }
   }
 
+  if (!data) {
+    return (
+      <section aria-labelledby="tab-coverage" className={styles.cpEmptyState}>
+        <p className={styles.cpSubtitle} style={{ marginBottom: '1rem' }}>
+          Pull your full dental coverage details directly from the Lincoln Dental API.
+        </p>
+        <button className={styles.primaryBtn} onClick={handleFetch} disabled={loading}>
+          {loading ? 'Fetching…' : 'Load My Coverage'}
+        </button>
+        {error && <p className={styles.error} role="alert">{error}</p>}
+      </section>
+    );
+  }
+
+  // Coverage tiers with descriptions for clarity
+  const tiers = [
+    {
+      label:   'Preventive',
+      value:   data.preventiveCoverage,
+      unit:    '%',
+      desc:    'Cleanings, exams, X-rays',
+      color:   '#2e9e6b',
+    },
+    {
+      label:   'Basic Restorative',
+      value:   data.basicRestorativeCoverage,
+      unit:    '%',
+      desc:    'Fillings, simple extractions',
+      color:   '#E8843A',
+    },
+    {
+      label:   'Major Restorative',
+      value:   data.majorRestorativeCoverage,
+      unit:    '%',
+      desc:    'Crowns, bridges, dentures',
+      color:   '#6B1237',
+    },
+    {
+      label:   'Orthodontia',
+      value:   data.orthodontiaCoverage,
+      unit:    '%',
+      desc:    `Braces & aligners — lifetime max $${data.orthodontiaLifetimeMax?.toLocaleString()}`,
+      color:   '#1A8080',
+    },
+  ];
+
   return (
     <section aria-labelledby="tab-coverage">
-      <p className={styles.panelIntro}>
-        Retrieve your full dental coverage summary from the Lincoln Dental API.
-      </p>
-      <button className={styles.primaryBtn} onClick={handleFetch} disabled={loading}>
-        {loading ? 'Fetching…' : 'Load My Coverage'}
-      </button>
-      {error && <p className={styles.error} role="alert">{error}</p>}
-      {data && (
-        <div className={styles.resultCard}>
-          <h3 className={styles.resultTitle}>Coverage Summary</h3>
-          <dl className={styles.dl}>
-            <dt>Plan</dt>                <dd>{data.planName}</dd>
-            <dt>Annual Max</dt>          <dd>${data.annualMaximum?.toLocaleString()}</dd>
-            <dt>Deductible</dt>          <dd>${data.deductible} individual / ${data.familyDeductible} family</dd>
-            <dt>Preventive</dt>          <dd>{data.preventiveCoverage}%</dd>
-            <dt>Basic Restorative</dt>   <dd>{data.basicRestorativeCoverage}%</dd>
-            <dt>Major Restorative</dt>   <dd>{data.majorRestorativeCoverage}%</dd>
-            <dt>Orthodontia</dt>         <dd>{data.orthodontiaCoverage}% (up to ${data.orthodontiaLifetimeMax?.toLocaleString()})</dd>
-            <dt>In-Network Only</dt>     <dd>{data.inNetworkOnly ? 'Yes' : 'No'}</dd>
-          </dl>
+      {/* Header row */}
+      <div className={styles.covHeader}>
+        <div>
+          <h2 className={styles.cpMainTitle}>Coverage Summary</h2>
+          <p className={styles.cpSubtitle}>
+            Plan: <strong>{data.planName}</strong> &nbsp;·&nbsp;
+            Annual max: <strong>${data.annualMaximum?.toLocaleString()}</strong> &nbsp;·&nbsp;
+            Deductible: <strong>${data.deductible} individual / ${data.familyDeductible} family</strong> &nbsp;·&nbsp;
+            In-network only: <strong>{data.inNetworkOnly ? 'Yes' : 'No'}</strong>
+          </p>
         </div>
-      )}
+        <button className={styles.covRefreshBtn} onClick={handleFetch} disabled={loading} aria-label="Refresh coverage data">
+          {loading ? '…' : '↻ Refresh'}
+        </button>
+      </div>
+
+      {/* Coverage tier bars */}
+      <div className={styles.covTiersGrid}>
+        {tiers.map((tier) => (
+          <div key={tier.label} className={styles.covTierCard}>
+            <div className={styles.covTierTop}>
+              <span className={styles.covTierLabel}>{tier.label}</span>
+              <span className={styles.covTierValue} style={{ color: tier.color }}>
+                {tier.value}{tier.unit}
+              </span>
+            </div>
+            <div
+              className={styles.covBarTrack}
+              role="progressbar"
+              aria-valuenow={tier.value}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`${tier.label}: ${tier.value}% covered`}
+            >
+              <div
+                className={styles.covBarFill}
+                style={{ width: `${tier.value}%`, background: tier.color }}
+              />
+            </div>
+            <p className={styles.covTierDesc}>{tier.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Key figures row */}
+      <div className={styles.covStatsRow}>
+        <div className={styles.covStat}>
+          <span className={styles.covStatNumber}>${data.annualMaximum?.toLocaleString()}</span>
+          <span className={styles.covStatLabel}>Annual Maximum</span>
+        </div>
+        <div className={styles.covStat}>
+          <span className={styles.covStatNumber}>${data.deductible}</span>
+          <span className={styles.covStatLabel}>Individual Deductible</span>
+        </div>
+        <div className={styles.covStat}>
+          <span className={styles.covStatNumber}>${data.familyDeductible}</span>
+          <span className={styles.covStatLabel}>Family Deductible</span>
+        </div>
+        <div className={styles.covStat}>
+          <span className={styles.covStatNumber}>${data.orthodontiaLifetimeMax?.toLocaleString()}</span>
+          <span className={styles.covStatLabel}>Ortho Lifetime Max</span>
+        </div>
+      </div>
     </section>
   );
 }
 
-/* ── Submit claim panel ─────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   SUBMIT CLAIM PANEL
+   ══════════════════════════════════════════════════════════ */
 function ClaimPanel() {
   const [form, setForm]       = useState({ providerName: '', serviceDate: '', procedureCode: '', amount: '', description: '' });
   const [result, setResult]   = useState(null);
@@ -525,12 +536,12 @@ function ClaimPanel() {
       </p>
       <form onSubmit={handleSubmit} className={styles.form} noValidate>
         <div className={styles.formRow}>
-          <Field label="Provider Name"        name="providerName"   value={form.providerName}   onChange={handleChange} placeholder="Dr. Smith"   required />
-          <Field label="Service Date"         name="serviceDate"    value={form.serviceDate}    onChange={handleChange} type="date"               required />
+          <Field label="Provider Name"        name="providerName"  value={form.providerName}  onChange={handleChange} placeholder="Dr. Smith"   required />
+          <Field label="Service Date"         name="serviceDate"   value={form.serviceDate}   onChange={handleChange} type="date"               required />
         </div>
         <div className={styles.formRow}>
-          <Field label="Procedure Code (ADA)" name="procedureCode"  value={form.procedureCode}  onChange={handleChange} placeholder="D0120"       required />
-          <Field label="Amount Billed ($)"    name="amount"         value={form.amount}         onChange={handleChange} type="number" placeholder="120.00" required />
+          <Field label="Procedure Code (ADA)" name="procedureCode" value={form.procedureCode} onChange={handleChange} placeholder="D0120"       required />
+          <Field label="Amount Billed ($)"    name="amount"        value={form.amount}        onChange={handleChange} type="number" placeholder="120.00" required />
         </div>
         <Field label="Description" name="description" value={form.description} onChange={handleChange} placeholder="Routine cleaning and exam" />
         <button type="submit" className={styles.primaryBtn} disabled={loading}>
@@ -550,7 +561,9 @@ function ClaimPanel() {
   );
 }
 
-/* ── Claim status panel ─────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   CLAIM STATUS PANEL
+   ══════════════════════════════════════════════════════════ */
 function ClaimStatusPanel() {
   const [claimId, setClaimId] = useState('');
   const [data, setData]       = useState(null);
@@ -611,7 +624,9 @@ function ClaimStatusPanel() {
   );
 }
 
-/* ── Providers panel ────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   FIND A PROVIDER PANEL
+   ══════════════════════════════════════════════════════════ */
 function ProvidersPanel() {
   const [zip, setZip]             = useState('');
   const [providers, setProviders] = useState([]);
@@ -674,7 +689,7 @@ function ProvidersPanel() {
   );
 }
 
-/* ── Reusable field ─────────────────────────────────────── */
+/* ── Reusable form field ────────────────────────────────── */
 function Field({ label, name, value, onChange, type = 'text', placeholder, required }) {
   return (
     <div className={styles.field}>
@@ -690,8 +705,6 @@ function Field({ label, name, value, onChange, type = 'text', placeholder, requi
         required={required}
         aria-required={required}
       />
-=======
->>>>>>> 766a7cf06907da17b594763d6738b32ebc5ad1b0
     </div>
   );
 }
