@@ -1,26 +1,30 @@
-/* ── Dental Assistance Page ─────────────────────────────── */
-.page { max-width: 1100px; margin: 0 auto; }
+/* ══════════════════════════════════════════════════════════
+   DENTAL ASSISTANCE PAGE  — hero grid only
+   ══════════════════════════════════════════════════════════ */
 
-/* Page header */
-.pageHeader { margin-bottom: 1.5rem; }
+.page         { max-width: 1100px; margin: 0 auto; }
+
+/* ── Page header ────────────────────────────────────────── */
+.pageHeader   { margin-bottom: 1.5rem; }
 .heading {
   margin: 0 0 0.35rem;
   font-size: 1.6rem;
   color: var(--color-primary);
   font-weight: 700;
 }
-.subheading { margin: 0; color: var(--color-text-secondary); font-size: 0.9rem; }
+.subheading   { margin: 0; color: var(--color-text-secondary); font-size: 0.9rem; }
 
-/* ── Two-column hero grid ───────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   HERO GRID
+   ══════════════════════════════════════════════════════════ */
 .heroGrid {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 1.5rem;
-  margin-bottom: 2rem;
   align-items: start;
 }
 
-/* ── LEFT: Coverage card ────────────────────────────────── */
+/* ── Coverage card (left) ───────────────────────────────── */
 .coverageCard {
   background: var(--color-surface);
   border: 1.5px solid var(--color-border);
@@ -30,7 +34,6 @@
   flex-direction: column;
   gap: 1.35rem;
 }
-
 .cardHeading {
   margin: 0;
   font-size: 1rem;
@@ -43,32 +46,11 @@
 }
 
 /* Progress bars */
-.barBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-.barLabelRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-.barLabel {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-}
-.barValue {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  white-space: nowrap;
-}
-.barOf {
-  font-weight: 400;
-  color: var(--color-text-muted);
-}
+.barBlock     { display: flex; flex-direction: column; gap: 0.4rem; }
+.barLabelRow  { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+.barLabel     { font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
+.barValue     { font-size: 0.82rem; font-weight: 700; color: var(--color-primary); white-space: nowrap; }
+.barOf        { font-weight: 400; color: var(--color-text-muted); }
 .barTrack {
   width: 100%;
   height: 10px;
@@ -76,23 +58,13 @@
   border-radius: var(--radius-pill);
   overflow: hidden;
 }
-.barFill {
-  height: 100%;
-  border-radius: var(--radius-pill);
-  transition: width 0.6s ease;
-}
-/* Bar color states */
-.barGood    { background: #2e9e6b; }          /* green  — healthy */
-.barWarning { background: var(--color-accent); } /* orange — getting close */
-.barDanger  { background: #c0392b; }          /* red    — critical */
+.barFill      { height: 100%; border-radius: var(--radius-pill); transition: width 0.6s ease; }
+.barGood      { background: #2e9e6b; }
+.barWarning   { background: var(--color-accent); }
+.barDanger    { background: #c0392b; }
+.barCaption   { margin: 0; font-size: 0.76rem; color: var(--color-text-muted); }
 
-.barCaption {
-  margin: 0;
-  font-size: 0.76rem;
-  color: var(--color-text-muted);
-}
-
-/* ── Expiring benefits alert ────────────────────────────── */
+/* Expiry alert */
 .expiryAlert {
   display: flex;
   align-items: center;
@@ -103,29 +75,10 @@
   padding: 1rem 1.25rem;
   flex-wrap: wrap;
 }
-.expiryLeft {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.expiryIcon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-.expiryTitle {
-  margin: 0 0 0.2rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.expiryBody {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #fff;
-  line-height: 1.4;
-}
+.expiryLeft   { display: flex; align-items: center; gap: 0.75rem; }
+.expiryIcon   { font-size: 1.5rem; flex-shrink: 0; }
+.expiryTitle  { margin: 0 0 0.2rem; font-size: 0.78rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+.expiryBody   { margin: 0; font-size: 0.9rem; color: #fff; line-height: 1.4; }
 .expiryBtn {
   display: inline-block;
   padding: 0.5rem 1.1rem;
@@ -139,12 +92,9 @@
   transition: background 0.15s, color 0.15s;
   flex-shrink: 0;
 }
-.expiryBtn:hover {
-  background: var(--color-primary);
-  color: #fff;
-}
+.expiryBtn:hover { background: var(--color-primary); color: #fff; }
 
-/* ── RIGHT: Quick links card ────────────────────────────── */
+/* ── Quick links card (right) ───────────────────────────── */
 .quickLinksCard {
   background: var(--color-surface);
   border: 1.5px solid var(--color-border);
@@ -154,16 +104,7 @@
   flex-direction: column;
   gap: 1rem;
 }
-
-.quickList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
+.quickList  { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .quickItem {
   display: flex;
   align-items: center;
@@ -221,12 +162,13 @@
   flex-shrink: 0;
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
 @media (max-width: 860px) {
-  .heroGrid { grid-template-columns: 1fr; }
-  .quickLinksCard { order: -1; } /* Quick links stack above coverage on mobile */
+  .heroGrid       { grid-template-columns: 1fr; }
+  .quickLinksCard { order: -1; }
 }
 @media (max-width: 600px) {
-  .formRow { grid-template-columns: 1fr; }
-  .expiryAlert { flex-direction: column; align-items: flex-start; }
+  .expiryAlert    { flex-direction: column; align-items: flex-start; }
 }
