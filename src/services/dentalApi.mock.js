@@ -163,78 +163,104 @@ export async function mockProviders(zip) {
 
 const CARE_PLAN_DATA = {
   employee: {
-    name: 'Alex Johnson',
-    planName: 'Lincoln Dental Premier',
-    annualMaximum: 1500,
+    name:           'Jordan Rivera',
+    planName:       'Lincoln Dental Premier',
+    annualMaximum:  2000,
   },
   planYears: [
     {
-      year: 2026,
-      annualMaxUsed: 1100,
-      annualMaxTotal: 1500,
+      year:           2026,
+      annualMaxUsed:  1055,   // filling + perio + cleaning plan shares
+      annualMaxTotal: 2000,
       procedures: [
         {
-          id: 'proc-2026-1',
-          month: 'Oct',
-          name: 'Root canal, molar',
-          category: 'Major Restorative',
-          urgency: 'urgent',
-          urgencyLabel: 'Urgent: do now',
-          coveredPercent: 50,
-          estimatedCost: 950,
-          patientCost: 475,
-          note: null,
+          id:             'proc-2026-1',
+          month:          'Aug',
+          name:           'Filling, composite (2 surfaces)',
+          category:       'Basic Restorative',
+          urgency:        'urgent',
+          urgencyLabel:   'Urgent: do now',
+          coveredPercent: 80,
+          estimatedCost:  340,
+          patientCost:    68,   // 20% of $340
+          note:           null,
         },
         {
-          id: 'proc-2026-2',
-          month: 'Nov',
-          name: 'Cleaning and exam',
-          category: 'Preventive',
-          urgency: 'routine',
-          urgencyLabel: null,
+          id:             'proc-2026-2',
+          month:          'Sep',
+          name:           'Periodontal scaling (2 quadrants)',
+          category:       'Basic Restorative',
+          urgency:        'urgent',
+          urgencyLabel:   'Urgent: do now',
+          coveredPercent: 80,
+          estimatedCost:  660,
+          patientCost:    132,  // 20% of $660
+          note:           null,
+        },
+        {
+          id:             'proc-2026-3',
+          month:          'Nov',
+          name:           'Cleaning and exam',
+          category:       'Preventive',
+          urgency:        'routine',
+          urgencyLabel:   null,
           coveredPercent: 100,
-          estimatedCost: 180,
-          patientCost: 0,
-          note: 'Covered 100%',
+          estimatedCost:  195,
+          patientCost:    0,
+          note:           'Covered 100%',
         },
       ],
     },
     {
-      year: 2027,
-      annualMaxUsed: 600,
-      annualMaxTotal: 1500,
+      year:           2027,
+      annualMaxUsed:  1890,   // crown + cleaning plan shares (under $2,000 max)
+      annualMaxTotal: 2000,
       procedures: [
         {
-          id: 'proc-2027-1',
-          month: 'Jan',
-          name: 'Crown, porcelain',
-          category: 'Major Restorative',
-          urgency: 'deferred',
-          urgencyLabel: 'Moved to new year',
+          id:             'proc-2027-1',
+          month:          'Feb',
+          name:           'Crown, porcelain-fused-to-metal',
+          category:       'Major Restorative',
+          urgency:        'deferred',
+          urgencyLabel:   'Moved to new year',
           coveredPercent: 50,
-          estimatedCost: 1200,
-          patientCost: 600,
-          note: null,
+          estimatedCost:  1890,
+          patientCost:    945,  // 50% of $1,890
+          note:           null,
         },
         {
-          id: 'proc-2027-2',
-          month: 'May',
-          name: 'Cleaning and exam',
-          category: 'Preventive',
-          urgency: 'routine',
-          urgencyLabel: null,
+          id:             'proc-2027-2',
+          month:          'Apr',
+          name:           'Cleaning and exam',
+          category:       'Preventive',
+          urgency:        'routine',
+          urgencyLabel:   null,
           coveredPercent: 100,
-          estimatedCost: 180,
-          patientCost: 0,
-          note: 'Covered 100%',
+          estimatedCost:  195,
+          patientCost:    0,
+          note:           'Covered 100%',
         },
       ],
     },
   ],
+  // ── Comparison totals ────────────────────────────────────
+  // All-in 2026: total estimated = $340+$660+$195+$1,890+$195 = $3,280
+  //   Plan's uncapped share = $272+$528+$195+$945+$195 = $2,135
+  //   Annual max cap = $2,000 → plan pays $2,000, you pay $3,280-$2,000 = $1,280
+  //
+  // Recommended (split): each year gets its own $2,000 max
+  //   2026: plan pays $272+$528+$195 = $995  (< $2,000 ✓)  you pay $200
+  //   2027: plan pays $945+$195 = $1,140 (< $2,000 ✓)  you pay $945
+  //   Total plan pays $2,135, you pay $1,145
+  //   Savings = $1,280 - $1,145 = $135  ← shown as savings
   comparison: {
-    allInCurrentYear: 1240,
-    recommended: 890,
-    savings: 350,
+    allInCurrentYear:        3280,
+    allInCurrentYearCovered: 2000,  // capped at annual max
+    allInCurrentYearOop:     1280,
+    recommended:             3280,  // same procedures — same total cost
+    recommendedCovered:      2135,  // two maxes available, plan pays full share
+    recommendedOop:          1145,
+    savings:                  135,
   },
 };
 

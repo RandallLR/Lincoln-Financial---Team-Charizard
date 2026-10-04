@@ -308,7 +308,7 @@ export default function LifeEventPage() {
       <div className={styles.page}>
         <div className={styles.successWrapper}>
           <div className={styles.successPanel} role="status" aria-live="polite">
-            <div className={styles.successIcon} aria-hidden="true"></div>
+            <div className={styles.successIcon} aria-hidden="true">✓</div>
             <h1 className={styles.successHeading}>Demo complete — no request was sent.</h1>
             <p className={styles.successBody}>
               In a real environment, submitting this request does not mean coverage is approved or
@@ -604,7 +604,6 @@ export default function LifeEventPage() {
 
                   {/* Documents note */}
                   <div className={styles.docNote} role="note">
-                    <span>
                     <span>
                       Supporting documents (e.g. marriage certificate, birth certificate) may be
                       required depending on your plan.
