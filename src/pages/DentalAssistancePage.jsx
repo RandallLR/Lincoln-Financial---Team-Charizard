@@ -32,13 +32,13 @@ const QUICK_LINKS = [
     to: '/benefits/dental/compare-plans',
   },
   {
-    icon: '📝',
+    icon: null,
     label: 'Add Qualifying Life Event',
     desc: 'Report a QLE to update your coverage outside open enrollment.',
-    to: '/benefits/dental/qle',
+    to: '/life-event',
   },
   {
-    icon: '📅',
+    icon: null,
     label: 'Schedule a Service',
     desc: 'Book a cleaning, exam, or specialist appointment.',
     to: '/benefits/dental/schedule',
@@ -58,7 +58,7 @@ export default function DentalAssistancePage() {
 
       {/* ── Page title ──────────────────────────────────── */}
       <header className={styles.pageHeader}>
-        <h1 className={styles.heading}>🦷 Dental Assistance</h1>
+        <h1 className={styles.heading}>Dental Assistance</h1>
         <p className={styles.subheading}>
           {s.planName} — manage claims, coverage, and in-network providers.
         </p>
@@ -139,7 +139,7 @@ export default function DentalAssistancePage() {
           {/* 4. Expiring benefits alert */}
           <div className={styles.expiryAlert} role="status">
             <div className={styles.expiryLeft}>
-              <span className={styles.expiryIcon}>⏳</span>
+              <span className={styles.expiryIcon} aria-hidden="true"></span>
               <div>
                 <p className={styles.expiryTitle}>Benefits expiring soon</p>
                 <p className={styles.expiryBody}>
