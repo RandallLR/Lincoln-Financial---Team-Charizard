@@ -408,14 +408,36 @@ export default function AIChatPage() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  // ── Load providers when triggered ───────────────────────
-  const loadProviders = useCallback(async () => {
+  // ── Load providers (optionally filtered by specialty keyword) ──
+  const loadProviders = useCallback(async (specialtyFilter = null) => {
     setProvidersLoading(true);
     try {
-      // Use employee's ZIP if available; default to Philadelphia area
       const zip = user?.address?.match(/\d{5}/)?.[0] ?? '19103';
       const data = await fetchDentalProviders(zip);
-      setProviders(data);
+
+      // Filter by specialty if a procedure category was identified
+      // so providers shown are actually relevant to the requested service
+      if (specialtyFilter) {
+        const filter = specialtyFilter.toLowerCase();
+        const SPECIALTY_MAP = {
+          orthodontia:        'orthodont',
+          major_restorative:  null,      // general dentists handle most major work
+          basic_restorative:  null,
+          preventive:         null,
+        };
+        const keyword = SPECIALTY_MAP[filter];
+        // Only filter when we have a meaningful specialty keyword
+        if (keyword) {
+          const filtered = data.filter((p) =>
+            p.specialty.toLowerCase().includes(keyword)
+          );
+          setProviders(filtered.length > 0 ? filtered : data);
+        } else {
+          setProviders(data);
+        }
+      } else {
+        setProviders(data);
+      }
     } catch {
       setProviders([]);
     } finally {
@@ -503,8 +525,10 @@ export default function AIChatPage() {
         if (aiResponse.estimate) {
           setLatestEstimate(aiResponse.estimate);
         }
-        if (aiResponse.providerTrigger && providers.length === 0) {
-          loadProviders();
+        // Always reload providers when triggered — pass procedure category
+        // so the list can be filtered to relevant specialties
+        if (aiResponse.providerTrigger) {
+          loadProviders(aiResponse.estimate?.category ?? null);
         }
         if (aiResponse.awaitingNetwork) {
           setAwaitingNetwork(aiResponse.awaitingNetwork);
@@ -533,7 +557,7 @@ export default function AIChatPage() {
         inputRef.current?.focus();
       }
     },
-    [isTyping, isInNetwork, awaitingNetwork, messages, coverage, providers.length, loadProviders]
+    [isTyping, isInNetwork, awaitingNetwork, messages, coverage, loadProviders]
   );
 
   // ── Handle form submit ───────────────────────────────────

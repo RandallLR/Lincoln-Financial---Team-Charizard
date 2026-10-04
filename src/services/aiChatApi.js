@@ -294,18 +294,12 @@ function deriveMetadata(userMessage, isInNetwork, coverage) {
     return ['How much is a crown?', 'What does my plan cover?', 'Show available providers', 'What is my deductible?'];
   })();
 
-  // Provider trigger — show providers panel when relevant
-  const providerTrigger =
-    lower.includes('provider') ||
-    lower.includes('dentist') ||
-    lower.includes('find') ||
-    lower.includes('near') ||
-    lower.includes('network') ||
-    lower.includes('crown') ||
-    lower.includes('implant') ||
-    lower.includes('root canal');
+  // Cost estimate — compute from known procedure data
+  // Resolve network: message keyword wins, then UI toggle state
+  const detectedFromMsg = detectNetwork(userMessage);
+  const resolvedNetwork = detectedFromMsg ?? (isInNetwork === true ? 'in' : isInNetwork === false ? 'out' : 'in');
+  const netBool = resolvedNetwork === 'in';
 
-  // Cost estimate — compute from our known procedure data
   const procedureEntry = Object.entries(DENTAL_PROCEDURES)
     .find(([key]) => lower.includes(key));
 
@@ -313,10 +307,17 @@ function deriveMetadata(userMessage, isInNetwork, coverage) {
   if (procedureEntry) {
     const [, procedure] = procedureEntry;
     if (procedure.category !== 'cosmetic') {
-      const netBool = isInNetwork === true || isInNetwork === 'in';
       estimate = generateCostEstimate(procedure, netBool, coverage ?? {});
     }
   }
+
+  // Provider trigger — show providers whenever a procedure or network is mentioned
+  const providerTrigger = procedureEntry != null ||
+    lower.includes('provider') ||
+    lower.includes('dentist') ||
+    lower.includes('find') ||
+    lower.includes('near') ||
+    lower.includes('network');
 
   return { suggestedReplies, providerTrigger, estimate };
 }
@@ -420,17 +421,24 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
   }
 
   if (lower.includes('in-network') || lower.includes('out-of-network') || lower.includes('network')) {
-    return {
-      text: `Your plan covers both **in-network** and **out-of-network** providers:\n\n` +
-        `| Service Type | In-Network | Out-of-Network |\n` +
-        `|---|---|---|\n` +
-        `| Preventive | 100% | 80% |\n` +
-        `| Basic Restorative | 80% | 60% |\n` +
-        `| Major Restorative | 50% | 30% |\n\n` +
-        `In-network providers have pre-negotiated rates, lowering your total bill before your percentage applies.`,
-      suggestedReplies: ['Show in-network providers', 'How much is a crown in-network?', 'Find a dentist', 'What is my annual maximum?'],
-      providerTrigger: true,
-    };
+    // Only show the generic network table if there's NO specific procedure in the message.
+    // If the user asked "How much does a crown cost in-network?" we want the cost estimate,
+    // not a generic explanation of in vs out-of-network.
+    const hasProcedure = Object.keys(DENTAL_PROCEDURES).some((key) => lower.includes(key));
+    if (!hasProcedure) {
+      return {
+        text: `Your plan covers both **in-network** and **out-of-network** providers:\n\n` +
+          `| Service Type | In-Network | Out-of-Network |\n` +
+          `|---|---|---|\n` +
+          `| Preventive | 100% | 80% |\n` +
+          `| Basic Restorative | 80% | 60% |\n` +
+          `| Major Restorative | 50% | 30% |\n\n` +
+          `In-network providers have pre-negotiated rates, lowering your total bill before your percentage applies.`,
+        suggestedReplies: ['Show in-network providers', 'How much is a crown in-network?', 'Find a dentist', 'What is my annual maximum?'],
+        providerTrigger: true,
+      };
+    }
+    // Fall through to procedure handling below with network context captured
   }
 
   const procedure = Object.entries(DENTAL_PROCEDURES)
@@ -443,15 +451,19 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
         suggestedReplies: ['What procedures are covered?', 'How much is a cleaning?', 'What is my annual maximum?'],
       };
     }
-    const network = isInNetwork ?? detectNetwork(message);
+
+    // Resolve network: prefer explicit keyword in message, then UI toggle state, then ask
+    const detectedFromMsg = detectNetwork(message);
+    const network = detectedFromMsg ?? (isInNetwork === true ? 'in' : isInNetwork === false ? 'out' : null);
+
     if (network === null) {
       return {
         text: `I can estimate the cost of a **${procedure.label}** for you.\n\nFirst — would you be seeing an **in-network** or **out-of-network** provider?`,
-        suggestedReplies: ['In-network provider', 'Out-of-network provider', "Show both"],
+        suggestedReplies: ['In-network provider', 'Out-of-network provider', 'Show both'],
         awaitingNetwork: procedure,
       };
     }
-    const netBool = network === 'in' || network === true;
+    const netBool = network === 'in';
     const estimate = generateCostEstimate(procedure, netBool, coverage);
     const networkLabel = netBool ? 'in-network' : 'out-of-network';
     return {
@@ -462,8 +474,8 @@ function buildMockResponse(message, conversationHistory, coverage, isInNetwork) 
         `• **Your estimated cost:** ~$${estimate.youPay.toLocaleString()}\n\n` +
         `${estimate.deductibleApplied > 0
           ? `⚠️ Your $${estimate.deductibleApplied} remaining deductible applies first.\n\n`
-          : '✅ Your deductible is fully met.\n\n'}` +
-        `_Estimates only — actual costs vary by provider._`,
+          : '✅ Your deductible is fully met — no additional deductible applies.\n\n'}` +
+        `_Estimates are based on your plan's coverage percentages. Actual costs vary by provider._`,
       suggestedReplies: ['Show available providers', 'What does coinsurance mean?', 'How much is a cleaning?', 'What is pre-authorization?'],
       estimate,
       providerTrigger: true,
