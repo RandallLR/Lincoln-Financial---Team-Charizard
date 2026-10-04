@@ -24,19 +24,24 @@ const PLAN_SNAPSHOT = {
 
 const QUICK_LINKS = [
   {
-    icon: '📋',
+    icon: null,
     label: 'View / Compare Plans',
     desc:  'Browse and compare available dental plan options.',
     to:    '/benefits/dental/compare-plans',
   },
   {
-    icon: '📝',
+    icon: null,
     label: 'Add Qualifying Life Event',
+<<<<<<< HEAD
     desc:  'Report a QLE to update your coverage outside open enrollment.',
     to:    '/benefits/dental/qle',
+=======
+    desc: 'Report a QLE to update your coverage outside open enrollment.',
+    to: '/life-event',
+>>>>>>> 2942c90841d1c276d1e02e4be120cafbb33a4158
   },
   {
-    icon: '📅',
+    icon: null,
     label: 'Schedule a Service',
     desc:  'Book a cleaning, exam, or specialist appointment.',
     to:    '/benefits/dental/schedule',
@@ -65,7 +70,7 @@ export default function DentalAssistancePage() {
 
       {/* ── Page header ─────────────────────────────────── */}
       <header className={styles.pageHeader}>
-        <h1 className={styles.heading}>🦷 Dental Assistance</h1>
+        <h1 className={styles.heading}>Dental Assistance</h1>
         <p className={styles.subheading}>
           {s.planName} — manage claims, coverage, and in-network providers.
         </p>
@@ -135,7 +140,11 @@ export default function DentalAssistancePage() {
 
           <div className={styles.expiryAlert} role="status">
             <div className={styles.expiryLeft}>
+<<<<<<< HEAD
               <span className={styles.expiryIcon} aria-hidden="true">⏳</span>
+=======
+              <span className={styles.expiryIcon} aria-hidden="true"></span>
+>>>>>>> 2942c90841d1c276d1e02e4be120cafbb33a4158
               <div>
                 <p className={styles.expiryTitle}>Benefits expiring soon</p>
                 <p className={styles.expiryBody}>
@@ -154,7 +163,9 @@ export default function DentalAssistancePage() {
             {QUICK_LINKS.map((ql) => (
               <li key={ql.to}>
                 <Link to={ql.to} className={styles.quickItem}>
-                  <span className={styles.quickIcon} aria-hidden="true">{ql.icon}</span>
+                  {ql.icon && (
+                    <span className={styles.quickIcon} aria-hidden="true">{ql.icon}</span>
+                  )}
                   <div className={styles.quickText}>
                     <span className={styles.quickLabel}>{ql.label}</span>
                     <span className={styles.quickDesc}>{ql.desc}</span>
