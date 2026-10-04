@@ -13,6 +13,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import DashboardPage from './pages/DashboardPage';
 import BenefitsPage from './pages/BenefitsPage';
 import DentalAssistancePage from './pages/DentalAssistancePage';
+import AIChatPage from './pages/AIChatPage';
 import ProfilePage from './pages/ProfilePage';
 import LifeEventPage from './pages/LifeEventPage';
 import ComparePlansPage from './pages/ComparePlansPage';
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/benefits" element={<BenefitsPage />} />
         <Route path="/benefits/dental" element={<DentalAssistancePage />} />
         <Route path="/benefits/dental/compare-plans" element={<ComparePlansPage />} />
+        <Route path="/benefits/dental/ai-chat" element={<AIChatPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/life-event" element={<LifeEventPage />} />
       </Route>

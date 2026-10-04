@@ -608,8 +608,9 @@ export default function LifeEventPage() {
                       Supporting documents (e.g. marriage certificate, birth certificate) may be
                       required depending on your plan.
                     </span>
+                    </span>
                   </div>
-                </div>
+                </div>{/* end formCard */}
 
                 <div className={styles.formActions}>
                   <button

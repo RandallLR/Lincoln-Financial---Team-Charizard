@@ -4,6 +4,7 @@
   "description": "Lincoln Financial Group Employee Self-Service Portal",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

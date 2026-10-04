@@ -1,1 +1,20 @@
-﻿node_modules/
+# ── Dependencies ──────────────────────────────────────────
+node_modules/
+
+# ── Build output ───────────────────────────────────────────
+dist/
+dist-ssr/
+
+# ── Environment / secrets ──────────────────────────────────
+# .env.example IS committed — it contains no real secrets.
+.env
+.env.local
+.env.*.local
+
+# ── Vite cache ─────────────────────────────────────────────
+.vite/
+
+# ── Editor ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log

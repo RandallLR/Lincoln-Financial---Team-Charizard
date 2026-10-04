@@ -4,17 +4,30 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+
   server: {
     port: 3000,
-    // Proxy dental API requests to a real backend in development
     proxy: {
-      '/api': {
+      // ── Dental API backend ─────────────────────────────
+      '/api/dental': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
       },
+
+      // ── Ollama proxy ───────────────────────────────────
+      // Rewrites /api/ollama/... → http://localhost:11434/...
+      // Ollama runs locally — no API key required.
+      // The proxy avoids the browser's same-origin restriction when
+      // the dev server port differs from Ollama's port (11434).
+      '/api/ollama': {
+        target: 'http://localhost:11434',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/ollama/, ''),
+      },
     },
   },
+
   resolve: {
     alias: {
       '@': '/src',
